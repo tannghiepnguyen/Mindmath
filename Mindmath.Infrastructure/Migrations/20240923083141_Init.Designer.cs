@@ -12,7 +12,7 @@ using Mindmath.Infrastructure.Persistence;
 namespace Mindmath.Infrastructure.Migrations
 {
     [DbContext(typeof(MindmathDbContext))]
-    [Migration("20240920055314_Init")]
+    [Migration("20240923083141_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -54,13 +54,13 @@ namespace Mindmath.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "fb1a11ef-088f-4b71-823d-9ae49d68d6fd",
+                            Id = "e2c41f1e-bc94-42f8-beb5-10d3a2a406dd",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "058d6935-be53-4fdb-8454-2fb136a5e011",
+                            Id = "ab84eb31-7aaa-4e44-8aa9-409be54014c8",
                             Name = "Teacher",
                             NormalizedName = "TEACHER"
                         });
@@ -263,9 +263,6 @@ namespace Mindmath.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfTopic")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -280,6 +277,18 @@ namespace Mindmath.Infrastructure.Migrations
                     b.HasIndex("SubjectId");
 
                     b.ToTable("Chapters");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"),
+                            CreatedAt = new DateOnly(2021, 10, 1),
+                            Description = "This chapter deals with quadratic equations and their solutions using different methods such as factorization, completing the square, and the quadratic formula.",
+                            Name = "Quadratic Equations",
+                            Status = true,
+                            SubjectId = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
+                            UpdatedAt = new DateOnly(2021, 10, 1)
+                        });
                 });
 
             modelBuilder.Entity("Mindmath.Domain.Models.InputParameter", b =>
@@ -322,6 +331,9 @@ namespace Mindmath.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("Status")
+                        .HasColumnType("bit");
+
                     b.Property<Guid?>("TopicId")
                         .HasColumnType("uniqueidentifier");
 
@@ -333,6 +345,18 @@ namespace Mindmath.Infrastructure.Migrations
                     b.HasIndex("TopicId");
 
                     b.ToTable("ProblemTypes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("63451f88-8285-4f88-97b1-96d1ec42e53e"),
+                            CreatedAt = new DateOnly(2021, 10, 1),
+                            Description = "These problems involve finding whether the function has a maximum or minimum value by analyzing the vertex of the parabola. If a>0, the vertex is a minimum; if a<0, the vertex is a maximum. Students are often asked to interpret these values in the context of real-world scenarios.",
+                            Name = "63451f88-8285-4f88-97b1-96d1ec42e53e",
+                            Status = true,
+                            TopicId = new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"),
+                            UpdatedAt = new DateOnly(2021, 10, 1)
+                        });
                 });
 
             modelBuilder.Entity("Mindmath.Domain.Models.Solution", b =>
@@ -398,9 +422,6 @@ namespace Mindmath.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("NumberOfChapter")
-                        .HasColumnType("int");
-
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
@@ -410,6 +431,17 @@ namespace Mindmath.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Subjects");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
+                            CreatedAt = new DateOnly(2021, 10, 1),
+                            Description = "The study of numbers, quantities, structures, shapes, space, and change. It involves abstract concepts as well as practical problem-solving techniques that are essential in various fields such as science, engineering, economics, and more.",
+                            Name = "Mathematics",
+                            Status = true,
+                            UpdatedAt = new DateOnly(2021, 10, 1)
+                        });
                 });
 
             modelBuilder.Entity("Mindmath.Domain.Models.Topic", b =>
@@ -445,6 +477,18 @@ namespace Mindmath.Infrastructure.Migrations
                     b.HasIndex("ChapterId");
 
                     b.ToTable("Topics");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"),
+                            ChapterId = new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"),
+                            CreatedAt = new DateOnly(2021, 10, 1),
+                            Description = "Focuses on the shape of the graph of quadratic functions, known as parabolas. It explains how to graph a quadratic function and how the coefficients a, b, c affect the shape and position of the parabola. The section highlights the vertex and axis of symmetry",
+                            Name = "Graph of a Quadratic Function",
+                            Status = true,
+                            UpdatedAt = new DateOnly(2021, 10, 1)
+                        });
                 });
 
             modelBuilder.Entity("Mindmath.Domain.Models.Transaction", b =>

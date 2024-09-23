@@ -1,7 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Mindmath.Application.InternalService;
-using Mindmath.Application.IService;
 using Mindmath.Domain.Models;
 using Mindmath.Domain.Repository;
 using Mindmath.Infrastructure.Persistence;
@@ -32,21 +30,21 @@ namespace Mindmath.API.Extension
 
 		public static void ConfigureRepositorymanager(this IServiceCollection services) => services.AddScoped<IRepositoryManager, RepositoryManager>();
 
-		public static void ConfigureServiceManager(this IServiceCollection services) => services.AddScoped<IServiceManager, ServiceManager>();
-
 		public static void ConfigureIdentity(this IServiceCollection services)
 		{
 			services.AddIdentity<User, IdentityRole>(o =>
 			{
-				o.Password.RequireDigit = true;
+				o.Password.RequireDigit = false;
 				o.Password.RequireLowercase = true;
-				o.Password.RequireUppercase = true;
-				o.Password.RequireNonAlphanumeric = true;
-				o.Password.RequiredLength = 8;
+				o.Password.RequireUppercase = false;
+				o.Password.RequireNonAlphanumeric = false;
+				o.Password.RequiredLength = 5;
 				o.User.RequireUniqueEmail = true;
 			})
 				.AddEntityFrameworkStores<MindmathDbContext>()
 				.AddDefaultTokenProviders();
 		}
+
+
 	}
 }

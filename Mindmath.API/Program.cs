@@ -1,4 +1,5 @@
 using Mindmath.API.Extension;
+using Mindmath.Application.Extension;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,13 +10,16 @@ builder.Services.AddControllers();
 builder.Services.ConfigureCors();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.ConfigureRepositorymanager();
-builder.Services.ConfigureServiceManager();
+builder.Services.AddApplicationServices();
 builder.Services.ConfigureIdentity();
 builder.Services.AddAuthentication();
-
+builder.Services.ConfigureJwt(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+	c.MapType<DateOnly>(() => new Microsoft.OpenApi.Models.OpenApiSchema { Type = "string", Format = "date" });
+});
 
 
 var app = builder.Build();

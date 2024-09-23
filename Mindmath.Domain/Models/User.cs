@@ -9,7 +9,7 @@ namespace Mindmath.Domain.Models
 		public DateOnly DateOfBirth { get; set; }
 		public DateOnly CreateAt { get; set; }
 		public DateOnly UpdateAt { get; set; }
-		public string Avatar { get; set; }
+		public string? Avatar { get; set; }
 		public bool Active { get; set; }
 		public Wallet Wallet { get; set; }
 		public ICollection<Solution> Solutions { get; set; }

@@ -10,6 +10,7 @@ namespace Mindmath.Domain.Models
 		public string Description { get; set; }
 		public DateOnly CreatedAt { get; set; }
 		public DateOnly UpdatedAt { get; set; }
+		public bool Status { get; set; }
 		public Guid? TopicId { get; set; }
 		public Topic Topic { get; set; }
 		public ICollection<InputParameter> InputParameters { get; set; } = new List<InputParameter>();

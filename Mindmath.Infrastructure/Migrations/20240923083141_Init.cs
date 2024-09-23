@@ -67,7 +67,6 @@ namespace Mindmath.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumberOfChapter = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     UpdatedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false)
@@ -208,7 +207,6 @@ namespace Mindmath.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    NumberOfTopic = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     UpdatedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -278,6 +276,7 @@ namespace Mindmath.Infrastructure.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     UpdatedAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    Status = table.Column<bool>(type: "bit", nullable: false),
                     TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
@@ -358,9 +357,29 @@ namespace Mindmath.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "058d6935-be53-4fdb-8454-2fb136a5e011", null, "Teacher", "TEACHER" },
-                    { "fb1a11ef-088f-4b71-823d-9ae49d68d6fd", null, "Admin", "ADMIN" }
+                    { "ab84eb31-7aaa-4e44-8aa9-409be54014c8", null, "Teacher", "TEACHER" },
+                    { "e2c41f1e-bc94-42f8-beb5-10d3a2a406dd", null, "Admin", "ADMIN" }
                 });
+
+            migrationBuilder.InsertData(
+                table: "Subjects",
+                columns: new[] { "Id", "CreatedAt", "Description", "Name", "Status", "UpdatedAt" },
+                values: new object[] { new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"), new DateOnly(2021, 10, 1), "The study of numbers, quantities, structures, shapes, space, and change. It involves abstract concepts as well as practical problem-solving techniques that are essential in various fields such as science, engineering, economics, and more.", "Mathematics", true, new DateOnly(2021, 10, 1) });
+
+            migrationBuilder.InsertData(
+                table: "Chapters",
+                columns: new[] { "Id", "CreatedAt", "Description", "Name", "Status", "SubjectId", "UpdatedAt" },
+                values: new object[] { new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"), new DateOnly(2021, 10, 1), "This chapter deals with quadratic equations and their solutions using different methods such as factorization, completing the square, and the quadratic formula.", "Quadratic Equations", true, new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"), new DateOnly(2021, 10, 1) });
+
+            migrationBuilder.InsertData(
+                table: "Topics",
+                columns: new[] { "Id", "ChapterId", "CreatedAt", "Description", "Name", "Status", "UpdatedAt" },
+                values: new object[] { new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"), new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"), new DateOnly(2021, 10, 1), "Focuses on the shape of the graph of quadratic functions, known as parabolas. It explains how to graph a quadratic function and how the coefficients a, b, c affect the shape and position of the parabola. The section highlights the vertex and axis of symmetry", "Graph of a Quadratic Function", true, new DateOnly(2021, 10, 1) });
+
+            migrationBuilder.InsertData(
+                table: "ProblemTypes",
+                columns: new[] { "Id", "CreatedAt", "Description", "Name", "Status", "TopicId", "UpdatedAt" },
+                values: new object[] { new Guid("63451f88-8285-4f88-97b1-96d1ec42e53e"), new DateOnly(2021, 10, 1), "These problems involve finding whether the function has a maximum or minimum value by analyzing the vertex of the parabola. If a>0, the vertex is a minimum; if a<0, the vertex is a maximum. Students are often asked to interpret these values in the context of real-world scenarios.", "63451f88-8285-4f88-97b1-96d1ec42e53e", true, new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"), new DateOnly(2021, 10, 1) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
