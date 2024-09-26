@@ -61,6 +61,12 @@ namespace Mindmath.Application.Users
 				claims.Add(new Claim("Roles", role));
 			}
 			claims.Add(new Claim("Fullname", user.Fullname));
+			claims.Add(new Claim("Id", user.Id));
+			claims.Add(new Claim("Avatar", user.Avatar));
+			claims.Add(new Claim("Email", user.Email));
+			claims.Add(new Claim("PhoneNumber", user.PhoneNumber));
+			claims.Add(new Claim("Gender", user.Gender));
+			claims.Add(new Claim("DateOfBirth", user.DateOfBirth.ToString()));
 			return claims;
 		}
 
@@ -76,6 +82,7 @@ namespace Mindmath.Application.Users
 			var user = mapper.Map<User>(userForRegistration);
 			user.CreateAt = DateOnly.FromDateTime(DateTime.Now);
 			user.UpdateAt = DateOnly.FromDateTime(DateTime.Now);
+			user.Avatar = string.Empty;
 			user.Active = true;
 
 			var result = await userManager.CreateAsync(user, userForRegistration.Password);

@@ -6,7 +6,7 @@ using Mindmath.Application.Users;
 using Mindmath.Domain.Models;
 using Mindmath.Domain.Repository;
 
-namespace Mindmath.Application.InternalService
+namespace Mindmath.Application.Service
 {
 	public sealed class ServiceManager : IServiceManager
 	{

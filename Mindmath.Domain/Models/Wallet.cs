@@ -10,5 +10,6 @@ namespace Mindmath.Domain.Models
 		public string? UserId { get; set; }
 		public User User { get; set; }
 		public ICollection<Transaction> Transactions { get; set; }
+		public ICollection<Deposit> Deposits { get; set; }
 	}
 }

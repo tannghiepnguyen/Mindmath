@@ -8,6 +8,8 @@ namespace Mindmath.Domain.Models
 		public Guid Id { get; set; }
 		public string Input { get; set; }
 		public DateOnly CreatedAt { get; set; }
+		public DateOnly UpdateAt { get; set; }
+		public bool Active { get; set; }
 		public Guid? ProblemTypeId { get; set; }
 		public ProblemType ProblemType { get; set; }
 		public Solution Solution { get; set; }

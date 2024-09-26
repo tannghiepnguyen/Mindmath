@@ -13,7 +13,7 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.Property(e => e.Description).IsRequired();
 			builder.Property(e => e.CreatedAt).IsRequired();
 			builder.Property(e => e.UpdatedAt).IsRequired();
-			builder.Property(e => e.Status).IsRequired();
+			builder.Property(e => e.Active).IsRequired();
 			builder.HasOne(e => e.Topic).WithMany(e => e.ProblemTypes).HasForeignKey(e => e.TopicId).OnDelete(DeleteBehavior.Restrict);
 			builder.HasMany(e => e.Solutions).WithOne(e => e.ProblemType).OnDelete(DeleteBehavior.Restrict);
 			builder.HasMany(e => e.InputParameters).WithOne(e => e.ProblemType).OnDelete(DeleteBehavior.Restrict);
@@ -26,7 +26,7 @@ namespace Mindmath.Infrastructure.Configuration
 					Description = "These problems involve finding whether the function has a maximum or minimum value by analyzing the vertex of the parabola. If a>0, the vertex is a minimum; if a<0, the vertex is a maximum. Students are often asked to interpret these values in the context of real-world scenarios.",
 					CreatedAt = new DateOnly(2021, 10, 1),
 					UpdatedAt = new DateOnly(2021, 10, 1),
-					Status = true,
+					Active = true,
 					TopicId = Guid.Parse("92ad3091-6df7-4da0-9899-45ad92d06b51")
 				}
 			);

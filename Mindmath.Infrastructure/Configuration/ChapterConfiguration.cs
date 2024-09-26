@@ -13,7 +13,7 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.Property(x => x.Description).IsRequired();
 			builder.Property(x => x.CreatedAt).IsRequired();
 			builder.Property(x => x.UpdatedAt).IsRequired();
-			builder.Property(x => x.Status).IsRequired();
+			builder.Property(x => x.Active).IsRequired();
 			builder.HasOne(x => x.Subject).WithMany(x => x.Chapters).HasForeignKey(x => x.SubjectId).OnDelete(DeleteBehavior.Restrict);
 
 			builder.HasData(
@@ -24,7 +24,7 @@ namespace Mindmath.Infrastructure.Configuration
 					Description = "This chapter deals with quadratic equations and their solutions using different methods such as factorization, completing the square, and the quadratic formula.",
 					CreatedAt = new DateOnly(2021, 10, 1),
 					UpdatedAt = new DateOnly(2021, 10, 1),
-					Status = true,
+					Active = true,
 					SubjectId = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd")
 				}
 			);

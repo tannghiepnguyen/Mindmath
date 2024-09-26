@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Mindmath.Application.InternalService;
 using Mindmath.Application.IService;
+using Mindmath.Application.Service;
 
 namespace Mindmath.Application.Extension
 {
