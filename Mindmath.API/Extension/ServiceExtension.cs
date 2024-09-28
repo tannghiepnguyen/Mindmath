@@ -44,7 +44,5 @@ namespace Mindmath.API.Extension
 				.AddEntityFrameworkStores<MindmathDbContext>()
 				.AddDefaultTokenProviders();
 		}
-
-
 	}
 }

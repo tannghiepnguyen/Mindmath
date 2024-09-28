@@ -38,5 +38,7 @@ namespace Mindmath.Application.Extension
 					};
 				});
 		}
+
+		public static void ConfigureLoggerService(this IServiceCollection services) => services.AddSingleton<ILoggerManager, LoggerManager>();
 	}
 }

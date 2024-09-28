@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Mindmath.Infrastructure.Repository
 {
-	public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+	public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 	{
 		protected MindmathDbContext _context;
 		public RepositoryBase(MindmathDbContext context)

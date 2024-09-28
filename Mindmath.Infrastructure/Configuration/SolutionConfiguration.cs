@@ -17,7 +17,6 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.HasOne(x => x.InputParameter).WithOne(x => x.Solution).HasForeignKey<Solution>(x => x.InputParameterId).OnDelete(DeleteBehavior.Restrict);
 			builder.HasOne(x => x.User).WithMany(x => x.Solutions).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
 			builder.HasOne(x => x.Transaction).WithOne(x => x.Solution).HasForeignKey<Solution>(x => x.TransactionId).OnDelete(DeleteBehavior.Restrict);
-			builder.HasOne(x => x.ProblemType).WithMany(x => x.Solutions).HasForeignKey(x => x.ProblemTypeId).OnDelete(DeleteBehavior.Restrict);
 
 		}
 	}

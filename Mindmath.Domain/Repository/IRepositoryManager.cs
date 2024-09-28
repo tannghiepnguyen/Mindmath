@@ -2,6 +2,7 @@
 {
 	public interface IRepositoryManager
 	{
+		ISubjectRepository Subjects { get; }
 		Task Save();
 	}
 }

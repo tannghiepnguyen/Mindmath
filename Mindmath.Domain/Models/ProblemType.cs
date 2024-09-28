@@ -14,6 +14,5 @@ namespace Mindmath.Domain.Models
 		public Guid? TopicId { get; set; }
 		public Topic Topic { get; set; }
 		public ICollection<InputParameter> InputParameters { get; set; } = new List<InputParameter>();
-		public ICollection<Solution> Solutions { get; set; } = new List<Solution>();
 	}
 }

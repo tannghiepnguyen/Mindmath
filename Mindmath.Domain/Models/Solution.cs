@@ -17,8 +17,6 @@ namespace Mindmath.Domain.Models
 		public User User { get; set; }
 		public Guid? TransactionId { get; set; }
 		public Transaction Transaction { get; set; }
-		public Guid? ProblemTypeId { get; set; }
-		public ProblemType ProblemType { get; set; }
 
 	}
 }

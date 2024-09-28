@@ -15,7 +15,6 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.Property(e => e.UpdatedAt).IsRequired();
 			builder.Property(e => e.Active).IsRequired();
 			builder.HasOne(e => e.Topic).WithMany(e => e.ProblemTypes).HasForeignKey(e => e.TopicId).OnDelete(DeleteBehavior.Restrict);
-			builder.HasMany(e => e.Solutions).WithOne(e => e.ProblemType).OnDelete(DeleteBehavior.Restrict);
 			builder.HasMany(e => e.InputParameters).WithOne(e => e.ProblemType).OnDelete(DeleteBehavior.Restrict);
 
 			builder.HasData(

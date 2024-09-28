@@ -21,8 +21,8 @@ namespace Mindmath.Infrastructure.Configuration
 					Id = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
 					Name = "Mathematics",
 					Description = "The study of numbers, quantities, structures, shapes, space, and change. It involves abstract concepts as well as practical problem-solving techniques that are essential in various fields such as science, engineering, economics, and more.",
-					CreatedAt = new DateOnly(2021, 10, 1),
-					UpdatedAt = new DateOnly(2021, 10, 1),
+					CreatedAt = DateTime.Now,
+					UpdatedAt = DateTime.Now,
 					Active = true
 				}
 			);
