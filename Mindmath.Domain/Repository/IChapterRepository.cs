@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Mindmath.Domain.Models;
 
 namespace Mindmath.Domain.Repository
 {
-    interface IChapterRepository
-    {
-    }
+	public interface IChapterRepository
+	{
+		Task<IEnumerable<Chapter>> GetChapters(Guid subjectId, bool trackChange);
+		Task<IEnumerable<Chapter>> GetActiveChapters(Guid subjectId, bool trackChange);
+		Task<Chapter?> GetChapter(Guid subjectId, Guid id, bool trackChange);
+		void CreateChapter(Guid subjectId, Chapter chapter);
+		void DeleteChapter(Chapter chapter);
+	}
 }

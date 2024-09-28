@@ -8,8 +8,8 @@ namespace Mindmath.Domain.Models
 		public Guid Id { get; set; }
 		public string Name { get; set; }
 		public string Description { get; set; }
-		public DateOnly CreatedAt { get; set; }
-		public DateOnly UpdatedAt { get; set; }
+		public DateTime CreatedAt { get; set; }
+		public DateTime UpdatedAt { get; set; }
 		public bool Active { get; set; }
 		public Guid SubjectId { get; set; }
 		public Subject Subject { get; set; }

@@ -22,8 +22,8 @@ namespace Mindmath.Infrastructure.Configuration
 					Id = Guid.Parse("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"),
 					Name = "Quadratic Equations",
 					Description = "This chapter deals with quadratic equations and their solutions using different methods such as factorization, completing the square, and the quadratic formula.",
-					CreatedAt = new DateOnly(2021, 10, 1),
-					UpdatedAt = new DateOnly(2021, 10, 1),
+					CreatedAt = DateTime.Now,
+					UpdatedAt = DateTime.Now,
 					Active = true,
 					SubjectId = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd")
 				}
