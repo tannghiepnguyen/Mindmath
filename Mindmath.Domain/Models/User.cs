@@ -12,6 +12,6 @@ namespace Mindmath.Domain.Models
 		public string? Avatar { get; set; }
 		public bool Active { get; set; }
 		public Wallet Wallet { get; set; }
-		public ICollection<Solution> Solutions { get; set; }
+		public ICollection<InputParameter> InputParameters { get; set; }
 	}
 }

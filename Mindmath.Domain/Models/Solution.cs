@@ -13,8 +13,6 @@ namespace Mindmath.Domain.Models
 		public bool Active { get; set; }
 		public Guid? InputParameterId { get; set; }
 		public InputParameter InputParameter { get; set; }
-		public string? UserId { get; set; }
-		public User User { get; set; }
 		public Guid? TransactionId { get; set; }
 		public Transaction Transaction { get; set; }
 

@@ -12,6 +12,8 @@ namespace Mindmath.Domain.Models
 		public bool Active { get; set; }
 		public Guid? ProblemTypeId { get; set; }
 		public ProblemType ProblemType { get; set; }
+		public string? UserId { get; set; }
+		public User User { get; set; }
 		public Solution Solution { get; set; }
 	}
 }

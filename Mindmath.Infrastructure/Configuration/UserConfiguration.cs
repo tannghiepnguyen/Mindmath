@@ -15,6 +15,8 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.Property(u => u.UpdateAt).IsRequired();
 			builder.Property(u => u.Avatar).IsRequired();
 			builder.Property(u => u.Active).IsRequired();
+			builder.HasOne(u => u.Wallet).WithOne(u => u.User).OnDelete(DeleteBehavior.Restrict);
+			builder.HasMany(u => u.InputParameters).WithOne(u => u.User).OnDelete(DeleteBehavior.Restrict);
 		}
 	}
 }

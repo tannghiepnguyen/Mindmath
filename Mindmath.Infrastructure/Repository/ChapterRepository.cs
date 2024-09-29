@@ -17,14 +17,11 @@ namespace Mindmath.Infrastructure.Repository
 			Create(chapter);
 		}
 
-		public void DeleteChapter(Chapter chapter)
-		{
-			Delete(chapter);
-		}
-
 		public async Task<IEnumerable<Chapter>> GetActiveChapters(Guid subjectId, bool trackChange) => await FindByCondition(c => c.SubjectId.Equals(subjectId) && c.Active, trackChange).ToListAsync();
 
 		public async Task<Chapter?> GetChapter(Guid subjectId, Guid id, bool trackChange) => await FindByCondition(c => c.SubjectId.Equals(subjectId) && c.Id.Equals(id), trackChange).SingleOrDefaultAsync();
+
+		public async Task<Chapter?> GetChapter(Guid id, bool trackChange) => await FindByCondition(c => c.Id.Equals(id), trackChange).SingleOrDefaultAsync();
 
 		public async Task<IEnumerable<Chapter>> GetChapters(Guid subjectId, bool trackChange) => await FindByCondition(c => c.SubjectId.Equals(subjectId), trackChange).ToListAsync();
 	}
