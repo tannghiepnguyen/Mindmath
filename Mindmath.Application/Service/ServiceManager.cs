@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Mindmath.Application.Chapters;
 using Mindmath.Application.IService;
+using Mindmath.Application.ProblemTypes;
 using Mindmath.Application.Subjects;
 using Mindmath.Application.Topics;
 using Mindmath.Application.Users;
@@ -17,12 +18,14 @@ namespace Mindmath.Application.Service
 		private readonly Lazy<ISubjectService> subjectService;
 		private readonly Lazy<IChapterService> chapterService;
 		private readonly Lazy<ITopicService> topicService;
+		private readonly Lazy<IProblemTypeService> problemTypeService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
 		{
 			authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper, configuration, roleManager));
 			subjectService = new Lazy<ISubjectService>(() => new SubjectService(repositoryManager, mapper));
 			chapterService = new Lazy<IChapterService>(() => new ChapterService(repositoryManager, mapper));
 			topicService = new Lazy<ITopicService>(() => new TopicService(repositoryManager, mapper));
+			problemTypeService = new Lazy<IProblemTypeService>(() => new ProblemTypeService(repositoryManager, mapper));
 		}
 		public IAuthenticationService AuthenticationService => authenticationService.Value;
 
@@ -31,5 +34,7 @@ namespace Mindmath.Application.Service
 		public IChapterService ChapterService => chapterService.Value;
 
 		public ITopicService TopicService => topicService.Value;
+
+		public IProblemTypeService ProblemTypeService => problemTypeService.Value;
 	}
 }

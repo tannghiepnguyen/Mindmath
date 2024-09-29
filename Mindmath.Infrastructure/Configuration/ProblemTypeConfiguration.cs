@@ -21,7 +21,7 @@ namespace Mindmath.Infrastructure.Configuration
 				new ProblemType()
 				{
 					Id = Guid.Parse("63451f88-8285-4f88-97b1-96d1ec42e53e"),
-					Name = "63451f88-8285-4f88-97b1-96d1ec42e53e",
+					Name = "Minimum and Maximum",
 					Description = "These problems involve finding whether the function has a maximum or minimum value by analyzing the vertex of the parabola. If a>0, the vertex is a minimum; if a<0, the vertex is a maximum. Students are often asked to interpret these values in the context of real-world scenarios.",
 					CreatedAt = DateTime.Now,
 					UpdatedAt = DateTime.Now,
