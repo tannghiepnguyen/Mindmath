@@ -12,7 +12,7 @@ using Mindmath.Infrastructure.Persistence;
 namespace Mindmath.Infrastructure.Migrations
 {
     [DbContext(typeof(MindmathDbContext))]
-    [Migration("20240926070849_Init")]
+    [Migration("20240929161305_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -255,8 +255,8 @@ namespace Mindmath.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -269,8 +269,8 @@ namespace Mindmath.Infrastructure.Migrations
                     b.Property<Guid>("SubjectId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly>("UpdatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -283,11 +283,11 @@ namespace Mindmath.Infrastructure.Migrations
                         {
                             Id = new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"),
                             Active = true,
-                            CreatedAt = new DateOnly(2021, 10, 1),
+                            CreatedAt = new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(3519),
                             Description = "This chapter deals with quadratic equations and their solutions using different methods such as factorization, completing the square, and the quadratic formula.",
                             Name = "Quadratic Equations",
                             SubjectId = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
-                            UpdatedAt = new DateOnly(2021, 10, 1)
+                            UpdatedAt = new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(3522)
                         });
                 });
 
@@ -326,8 +326,8 @@ namespace Mindmath.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Input")
                         .IsRequired()
@@ -336,12 +336,17 @@ namespace Mindmath.Infrastructure.Migrations
                     b.Property<Guid?>("ProblemTypeId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly>("UpdateAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UpdateAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("ProblemTypeId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("InputParameters");
                 });
@@ -355,8 +360,8 @@ namespace Mindmath.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -369,8 +374,8 @@ namespace Mindmath.Infrastructure.Migrations
                     b.Property<Guid?>("TopicId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly>("UpdatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -383,11 +388,11 @@ namespace Mindmath.Infrastructure.Migrations
                         {
                             Id = new Guid("63451f88-8285-4f88-97b1-96d1ec42e53e"),
                             Active = true,
-                            CreatedAt = new DateOnly(2021, 10, 1),
+                            CreatedAt = new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(6958),
                             Description = "These problems involve finding whether the function has a maximum or minimum value by analyzing the vertex of the parabola. If a>0, the vertex is a minimum; if a<0, the vertex is a maximum. Students are often asked to interpret these values in the context of real-world scenarios.",
-                            Name = "63451f88-8285-4f88-97b1-96d1ec42e53e",
+                            Name = "Minimum and Maximum",
                             TopicId = new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"),
-                            UpdatedAt = new DateOnly(2021, 10, 1)
+                            UpdatedAt = new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(6961)
                         });
                 });
 
@@ -414,17 +419,11 @@ namespace Mindmath.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ProblemTypeId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("TransactionId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateOnly>("UpdatedAt")
                         .HasColumnType("date");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -432,13 +431,9 @@ namespace Mindmath.Infrastructure.Migrations
                         .IsUnique()
                         .HasFilter("[InputParameterId] IS NOT NULL");
 
-                    b.HasIndex("ProblemTypeId");
-
                     b.HasIndex("TransactionId")
                         .IsUnique()
                         .HasFilter("[TransactionId] IS NOT NULL");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Solution");
                 });
@@ -452,8 +447,8 @@ namespace Mindmath.Infrastructure.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -463,8 +458,8 @@ namespace Mindmath.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateOnly>("UpdatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -475,10 +470,10 @@ namespace Mindmath.Infrastructure.Migrations
                         {
                             Id = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
                             Active = true,
-                            CreatedAt = new DateOnly(2021, 10, 1),
+                            CreatedAt = new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(2112),
                             Description = "The study of numbers, quantities, structures, shapes, space, and change. It involves abstract concepts as well as practical problem-solving techniques that are essential in various fields such as science, engineering, economics, and more.",
                             Name = "Mathematics",
-                            UpdatedAt = new DateOnly(2021, 10, 1)
+                            UpdatedAt = new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(2121)
                         });
                 });
 
@@ -494,8 +489,8 @@ namespace Mindmath.Infrastructure.Migrations
                     b.Property<Guid?>("ChapterId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateOnly>("CreatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -507,8 +502,8 @@ namespace Mindmath.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<DateOnly>("UpdatedAt")
-                        .HasColumnType("date");
+                    b.Property<DateTime>("UpdatedAt")
+                        .HasColumnType("datetime2");
 
                     b.HasKey("Id");
 
@@ -522,10 +517,10 @@ namespace Mindmath.Infrastructure.Migrations
                             Id = new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"),
                             Active = true,
                             ChapterId = new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"),
-                            CreatedAt = new DateOnly(2021, 10, 1),
+                            CreatedAt = new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(4949),
                             Description = "Focuses on the shape of the graph of quadratic functions, known as parabolas. It explains how to graph a quadratic function and how the coefficients a, b, c affect the shape and position of the parabola. The section highlights the vertex and axis of symmetry",
                             Name = "Graph of a Quadratic Function",
-                            UpdatedAt = new DateOnly(2021, 10, 1)
+                            UpdatedAt = new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(4952)
                         });
                 });
 
@@ -686,7 +681,14 @@ namespace Mindmath.Infrastructure.Migrations
                         .HasForeignKey("ProblemTypeId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("Mindmath.Domain.Models.User", "User")
+                        .WithMany("InputParameters")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.Navigation("ProblemType");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Mindmath.Domain.Models.ProblemType", b =>
@@ -706,28 +708,14 @@ namespace Mindmath.Infrastructure.Migrations
                         .HasForeignKey("Mindmath.Domain.Models.Solution", "InputParameterId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Mindmath.Domain.Models.ProblemType", "ProblemType")
-                        .WithMany("Solutions")
-                        .HasForeignKey("ProblemTypeId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("Mindmath.Domain.Models.Transaction", "Transaction")
                         .WithOne("Solution")
                         .HasForeignKey("Mindmath.Domain.Models.Solution", "TransactionId")
                         .OnDelete(DeleteBehavior.Restrict);
 
-                    b.HasOne("Mindmath.Domain.Models.User", "User")
-                        .WithMany("Solutions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.Navigation("InputParameter");
 
-                    b.Navigation("ProblemType");
-
                     b.Navigation("Transaction");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Mindmath.Domain.Models.Topic", b =>
@@ -754,7 +742,8 @@ namespace Mindmath.Infrastructure.Migrations
                 {
                     b.HasOne("Mindmath.Domain.Models.User", "User")
                         .WithOne("Wallet")
-                        .HasForeignKey("Mindmath.Domain.Models.Wallet", "UserId");
+                        .HasForeignKey("Mindmath.Domain.Models.Wallet", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("User");
                 });
@@ -773,8 +762,6 @@ namespace Mindmath.Infrastructure.Migrations
             modelBuilder.Entity("Mindmath.Domain.Models.ProblemType", b =>
                 {
                     b.Navigation("InputParameters");
-
-                    b.Navigation("Solutions");
                 });
 
             modelBuilder.Entity("Mindmath.Domain.Models.Subject", b =>
@@ -802,7 +789,7 @@ namespace Mindmath.Infrastructure.Migrations
 
             modelBuilder.Entity("Mindmath.Domain.Models.User", b =>
                 {
-                    b.Navigation("Solutions");
+                    b.Navigation("InputParameters");
 
                     b.Navigation("Wallet")
                         .IsRequired();

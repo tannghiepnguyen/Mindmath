@@ -21,7 +21,7 @@ namespace Mindmath.Application.Service
 		private readonly Lazy<IProblemTypeService> problemTypeService;
 		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
 		{
-			authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper, configuration, roleManager));
+			authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper, configuration, roleManager, repositoryManager));
 			subjectService = new Lazy<ISubjectService>(() => new SubjectService(repositoryManager, mapper));
 			chapterService = new Lazy<IChapterService>(() => new ChapterService(repositoryManager, mapper));
 			topicService = new Lazy<ITopicService>(() => new TopicService(repositoryManager, mapper));

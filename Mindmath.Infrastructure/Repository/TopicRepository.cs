@@ -21,7 +21,7 @@ namespace Mindmath.Infrastructure.Repository
 
 		public async Task<Topic?> GetTopic(Guid chapterId, Guid id, bool trackChange) => await FindByCondition(x => x.ChapterId == chapterId && x.Id == id, trackChange).SingleOrDefaultAsync();
 
-		public Task<Topic?> GetTopic(Guid id, bool trackChange) => FindByCondition(x => x.Id == id, trackChange).SingleOrDefaultAsync();
+		public async Task<Topic?> GetTopic(Guid id, bool trackChange) => await FindByCondition(x => x.Id == id, trackChange).SingleOrDefaultAsync();
 
 		public async Task<IEnumerable<Topic>> GetTopics(Guid chapterId, bool trackChange) => await FindByCondition(x => x.ChapterId == chapterId, trackChange).ToListAsync();
 	}

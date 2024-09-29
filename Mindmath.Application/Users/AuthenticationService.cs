@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using Mindmath.Application.Users.DTO;
 using Mindmath.Domain.Constant;
 using Mindmath.Domain.Models;
+using Mindmath.Domain.Repository;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -17,15 +18,16 @@ namespace Mindmath.Application.Users
 		private readonly IMapper mapper;
 		private readonly IConfiguration configuration;
 		private readonly RoleManager<IdentityRole> roleManager;
-
+		private readonly IRepositoryManager repositoryManager;
 		private User? user;
 
-		public AuthenticationService(UserManager<User> userManager, IMapper mapper, IConfiguration configuration, RoleManager<IdentityRole> roleManager)
+		public AuthenticationService(UserManager<User> userManager, IMapper mapper, IConfiguration configuration, RoleManager<IdentityRole> roleManager, IRepositoryManager repositoryManager)
 		{
 			this.userManager = userManager;
 			this.mapper = mapper;
 			this.configuration = configuration;
 			this.roleManager = roleManager;
+			this.repositoryManager = repositoryManager;
 		}
 
 		public async Task<string> CreateToken()
@@ -90,6 +92,17 @@ namespace Mindmath.Application.Users
 			{
 				await userManager.AddToRoleAsync(user, Roles.Teacher);
 			}
+
+			Wallet wallet = new Wallet
+			{
+				Id = Guid.NewGuid(),
+				Balance = 0,
+				UserId = user.Id
+			};
+
+			repositoryManager.Wallets.CreateWallet(wallet);
+			await repositoryManager.Save();
+
 			return result;
 		}
 

@@ -10,6 +10,7 @@ namespace Mindmath.Infrastructure.Repository
 		private readonly Lazy<IChapterRepository> _chapterRepository;
 		private readonly Lazy<ITopicRepository> _topicRepository;
 		private readonly Lazy<IProblemTypeRepository> _problemTypeRepository;
+		private readonly Lazy<IWalletRepository> _walletRepository;
 		public RepositoryManager(MindmathDbContext context)
 		{
 			_context = context;
@@ -17,6 +18,7 @@ namespace Mindmath.Infrastructure.Repository
 			_chapterRepository = new Lazy<IChapterRepository>(() => new ChapterRepository(_context));
 			_topicRepository = new Lazy<ITopicRepository>(() => new TopicRepository(_context));
 			_problemTypeRepository = new Lazy<IProblemTypeRepository>(() => new ProblemTypeRepository(_context));
+			_walletRepository = new Lazy<IWalletRepository>(() => new WalletRepository(_context));
 		}
 
 		public ISubjectRepository Subjects => _subjectRepository.Value;
@@ -26,6 +28,8 @@ namespace Mindmath.Infrastructure.Repository
 		public ITopicRepository Topics => _topicRepository.Value;
 
 		public IProblemTypeRepository ProblemTypes => _problemTypeRepository.Value;
+
+		public IWalletRepository Wallets => _walletRepository.Value;
 
 		public async Task Save() => await _context.SaveChangesAsync();
 	}

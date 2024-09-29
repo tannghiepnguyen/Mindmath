@@ -67,8 +67,8 @@ namespace Mindmath.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    UpdatedAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
@@ -197,7 +197,8 @@ namespace Mindmath.Infrastructure.Migrations
                         name: "FK_Wallets_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -207,8 +208,8 @@ namespace Mindmath.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    UpdatedAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     SubjectId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
@@ -271,8 +272,8 @@ namespace Mindmath.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    UpdatedAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     ChapterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -294,8 +295,8 @@ namespace Mindmath.Infrastructure.Migrations
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    UpdatedAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
@@ -316,14 +317,21 @@ namespace Mindmath.Infrastructure.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Input = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedAt = table.Column<DateOnly>(type: "date", nullable: false),
-                    UpdateAt = table.Column<DateOnly>(type: "date", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdateAt = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
-                    ProblemTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ProblemTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_InputParameters", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_InputParameters_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_InputParameters_ProblemTypes_ProblemTypeId",
                         column: x => x.ProblemTypeId,
@@ -343,29 +351,15 @@ namespace Mindmath.Infrastructure.Migrations
                     UpdatedAt = table.Column<DateOnly>(type: "date", nullable: false),
                     Active = table.Column<bool>(type: "bit", nullable: false),
                     InputParameterId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    ProblemTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    TransactionId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Solution", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Solution_AspNetUsers_UserId",
-                        column: x => x.UserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Solution_InputParameters_InputParameterId",
                         column: x => x.InputParameterId,
                         principalTable: "InputParameters",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Solution_ProblemTypes_ProblemTypeId",
-                        column: x => x.ProblemTypeId,
-                        principalTable: "ProblemTypes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -388,22 +382,22 @@ namespace Mindmath.Infrastructure.Migrations
             migrationBuilder.InsertData(
                 table: "Subjects",
                 columns: new[] { "Id", "Active", "CreatedAt", "Description", "Name", "UpdatedAt" },
-                values: new object[] { new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"), true, new DateOnly(2021, 10, 1), "The study of numbers, quantities, structures, shapes, space, and change. It involves abstract concepts as well as practical problem-solving techniques that are essential in various fields such as science, engineering, economics, and more.", "Mathematics", new DateOnly(2021, 10, 1) });
+                values: new object[] { new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"), true, new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(2112), "The study of numbers, quantities, structures, shapes, space, and change. It involves abstract concepts as well as practical problem-solving techniques that are essential in various fields such as science, engineering, economics, and more.", "Mathematics", new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(2121) });
 
             migrationBuilder.InsertData(
                 table: "Chapters",
                 columns: new[] { "Id", "Active", "CreatedAt", "Description", "Name", "SubjectId", "UpdatedAt" },
-                values: new object[] { new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"), true, new DateOnly(2021, 10, 1), "This chapter deals with quadratic equations and their solutions using different methods such as factorization, completing the square, and the quadratic formula.", "Quadratic Equations", new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"), new DateOnly(2021, 10, 1) });
+                values: new object[] { new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"), true, new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(3519), "This chapter deals with quadratic equations and their solutions using different methods such as factorization, completing the square, and the quadratic formula.", "Quadratic Equations", new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"), new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(3522) });
 
             migrationBuilder.InsertData(
                 table: "Topics",
                 columns: new[] { "Id", "Active", "ChapterId", "CreatedAt", "Description", "Name", "UpdatedAt" },
-                values: new object[] { new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"), true, new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"), new DateOnly(2021, 10, 1), "Focuses on the shape of the graph of quadratic functions, known as parabolas. It explains how to graph a quadratic function and how the coefficients a, b, c affect the shape and position of the parabola. The section highlights the vertex and axis of symmetry", "Graph of a Quadratic Function", new DateOnly(2021, 10, 1) });
+                values: new object[] { new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"), true, new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"), new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(4949), "Focuses on the shape of the graph of quadratic functions, known as parabolas. It explains how to graph a quadratic function and how the coefficients a, b, c affect the shape and position of the parabola. The section highlights the vertex and axis of symmetry", "Graph of a Quadratic Function", new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(4952) });
 
             migrationBuilder.InsertData(
                 table: "ProblemTypes",
                 columns: new[] { "Id", "Active", "CreatedAt", "Description", "Name", "TopicId", "UpdatedAt" },
-                values: new object[] { new Guid("63451f88-8285-4f88-97b1-96d1ec42e53e"), true, new DateOnly(2021, 10, 1), "These problems involve finding whether the function has a maximum or minimum value by analyzing the vertex of the parabola. If a>0, the vertex is a minimum; if a<0, the vertex is a maximum. Students are often asked to interpret these values in the context of real-world scenarios.", "63451f88-8285-4f88-97b1-96d1ec42e53e", new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"), new DateOnly(2021, 10, 1) });
+                values: new object[] { new Guid("63451f88-8285-4f88-97b1-96d1ec42e53e"), true, new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(6958), "These problems involve finding whether the function has a maximum or minimum value by analyzing the vertex of the parabola. If a>0, the vertex is a minimum; if a<0, the vertex is a maximum. Students are often asked to interpret these values in the context of real-world scenarios.", "Minimum and Maximum", new Guid("92ad3091-6df7-4da0-9899-45ad92d06b51"), new DateTime(2024, 9, 29, 23, 13, 5, 578, DateTimeKind.Local).AddTicks(6961) });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -460,6 +454,11 @@ namespace Mindmath.Infrastructure.Migrations
                 column: "ProblemTypeId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_InputParameters_UserId",
+                table: "InputParameters",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProblemTypes_TopicId",
                 table: "ProblemTypes",
                 column: "TopicId");
@@ -472,21 +471,11 @@ namespace Mindmath.Infrastructure.Migrations
                 filter: "[InputParameterId] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Solution_ProblemTypeId",
-                table: "Solution",
-                column: "ProblemTypeId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Solution_TransactionId",
                 table: "Solution",
                 column: "TransactionId",
                 unique: true,
                 filter: "[TransactionId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Solution_UserId",
-                table: "Solution",
-                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Topics_ChapterId",
