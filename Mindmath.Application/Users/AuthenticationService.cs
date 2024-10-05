@@ -1,11 +1,14 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
-using Mindmath.Application.Users.DTO;
-using Mindmath.Domain.Constant;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
+using Mindmath.Repository.Constant;
+using Mindmath.Repository.Exceptions;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Service.Users;
+using Mindmath.Service.Users.DTO;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -82,8 +85,8 @@ namespace Mindmath.Application.Users
 		public async Task<IdentityResult> RegisterUser(UserForRegistrationDTO userForRegistration)
 		{
 			var user = mapper.Map<User>(userForRegistration);
-			user.CreateAt = DateOnly.FromDateTime(DateTime.Now);
-			user.UpdateAt = DateOnly.FromDateTime(DateTime.Now);
+			user.CreateAt = DateTime.Now;
+			user.UpdateAt = DateTime.Now;
 			user.Avatar = string.Empty;
 			user.Active = true;
 
@@ -112,11 +115,41 @@ namespace Mindmath.Application.Users
 
 			var result = (user != null && await userManager.CheckPasswordAsync(user, userForAuthentication.Password));
 
-			if (!result)
-			{
-
-			}
 			return result;
+		}
+
+		public async Task<IdentityResult> UpdateUser(string userId, UserForUpdateDto userForUpdateDto)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+
+			if (user is null) throw new UserNotFoundException(userId);
+
+			mapper.Map(userForUpdateDto, user);
+
+			return await userManager.UpdateAsync(user);
+		}
+
+		public async Task<UserReturnDto> GetUserById(string userId)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+			if (user is null) throw new UserNotFoundException(userId);
+
+			return mapper.Map<UserReturnDto>(user);
+		}
+
+		public async Task<IEnumerable<UserReturnDto>> GetUsers()
+		{
+			var users = await userManager.Users.ToListAsync();
+			return mapper.Map<IEnumerable<UserReturnDto>>(users);
+		}
+
+		public async Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+
+			if (user is null) throw new UserNotFoundException(userId);
+
+			return await userManager.ChangePasswordAsync(user, userForUpdatePasswordDto.OldPassword, userForUpdatePasswordDto.NewPassword);
 		}
 	}
 }

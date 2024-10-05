@@ -1,10 +1,10 @@
-﻿namespace Mindmath.Application.Chapters.DTO
+﻿namespace Mindmath.Service.Chapters.DTO
 {
-	public class ChapterReturnDto
+	public record ChapterReturnDto
 	{
-		public Guid Id { get; set; }
-		public string Name { get; set; }
-		public string Description { get; set; }
-		public bool Active { get; set; }
+		public Guid Id { get; init; }
+		public string Name { get; init; }
+		public string Description { get; init; }
+		public bool Active { get; init; }
 	}
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Mindmath.Domain.Models;
+using Mindmath.Repository.Models;
+using Mindmath.Service.ProblemTypes.DTO;
 
 namespace Mindmath.Application.ProblemTypes.DTO
 {

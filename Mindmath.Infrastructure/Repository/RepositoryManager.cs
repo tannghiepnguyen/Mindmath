@@ -1,5 +1,6 @@
-﻿using Mindmath.Domain.Repository;
-using Mindmath.Infrastructure.Persistence;
+﻿using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Persistence;
+using Mindmath.Repository.Repository;
 
 namespace Mindmath.Infrastructure.Repository
 {
@@ -11,6 +12,8 @@ namespace Mindmath.Infrastructure.Repository
 		private readonly Lazy<ITopicRepository> _topicRepository;
 		private readonly Lazy<IProblemTypeRepository> _problemTypeRepository;
 		private readonly Lazy<IWalletRepository> _walletRepository;
+		private readonly Lazy<IInputParameterRepository> _inputParameterRepository;
+		private readonly Lazy<ISolutionRepository> _solutionRepository;
 		public RepositoryManager(MindmathDbContext context)
 		{
 			_context = context;
@@ -19,6 +22,8 @@ namespace Mindmath.Infrastructure.Repository
 			_topicRepository = new Lazy<ITopicRepository>(() => new TopicRepository(_context));
 			_problemTypeRepository = new Lazy<IProblemTypeRepository>(() => new ProblemTypeRepository(_context));
 			_walletRepository = new Lazy<IWalletRepository>(() => new WalletRepository(_context));
+			_inputParameterRepository = new Lazy<IInputParameterRepository>(() => new InputParameterRepository(_context));
+			_solutionRepository = new Lazy<ISolutionRepository>(() => new SolutionRepository(_context));
 		}
 
 		public ISubjectRepository Subjects => _subjectRepository.Value;
@@ -30,6 +35,10 @@ namespace Mindmath.Infrastructure.Repository
 		public IProblemTypeRepository ProblemTypes => _problemTypeRepository.Value;
 
 		public IWalletRepository Wallets => _walletRepository.Value;
+
+		public IInputParameterRepository InputParameters => _inputParameterRepository.Value;
+
+		public ISolutionRepository Solutions => _solutionRepository.Value;
 
 		public async Task Save() => await _context.SaveChangesAsync();
 	}

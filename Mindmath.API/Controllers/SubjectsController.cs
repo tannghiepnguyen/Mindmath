@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mindmath.Application.IService;
-using Mindmath.Application.Subjects.DTO;
+using Mindmath.Service.IService;
+using Mindmath.Service.Subjects.DTO;
 
 namespace Mindmath.API.Controllers
 {

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Mindmath.Application.Topics.DTO;
-using Mindmath.Domain.Exceptions;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
+using Mindmath.Repository.Exceptions;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Service.Topics.DTO;
 
-namespace Mindmath.Application.Topics
+namespace Mindmath.Service.Topics
 {
 	internal sealed class TopicService : ITopicService
 	{
@@ -31,7 +31,8 @@ namespace Mindmath.Application.Topics
 			topicEntity.CreatedAt = DateTime.Now;
 			topicEntity.UpdatedAt = DateTime.Now;
 			topicEntity.Active = true;
-			repositoryManager.Topics.CreateTopic(chapterId, topicEntity);
+			topicEntity.ChapterId = chapterId;
+			repositoryManager.Topics.CreateTopic(topicEntity);
 			await repositoryManager.Save();
 			return mapper.Map<TopicReturnDto>(topicEntity);
 		}

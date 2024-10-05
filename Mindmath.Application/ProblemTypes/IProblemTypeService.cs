@@ -1,6 +1,6 @@
-﻿using Mindmath.Application.ProblemTypes.DTO;
+﻿using Mindmath.Service.ProblemTypes.DTO;
 
-namespace Mindmath.Application.ProblemTypes
+namespace Mindmath.Service.ProblemTypes
 {
 	public interface IProblemTypeService
 	{

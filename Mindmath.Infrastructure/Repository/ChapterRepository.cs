@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
-using Mindmath.Infrastructure.Persistence;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Repository.Persistence;
 
-namespace Mindmath.Infrastructure.Repository
+namespace Mindmath.Repository.Repository
 {
 	internal sealed class ChapterRepository : RepositoryBase<Chapter>, IChapterRepository
 	{
@@ -11,11 +11,7 @@ namespace Mindmath.Infrastructure.Repository
 		{
 		}
 
-		public void CreateChapter(Guid subjectId, Chapter chapter)
-		{
-			chapter.SubjectId = subjectId;
-			Create(chapter);
-		}
+		public void CreateChapter(Chapter chapter) => Create(chapter);
 
 		public async Task<IEnumerable<Chapter>> GetActiveChapters(Guid subjectId, bool trackChange) => await FindByCondition(c => c.SubjectId.Equals(subjectId) && c.Active, trackChange).ToListAsync();
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
-using Mindmath.Infrastructure.Persistence;
 using Mindmath.Infrastructure.Repository;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Repository.Persistence;
 
 namespace Mindmath.API.Extension
 {

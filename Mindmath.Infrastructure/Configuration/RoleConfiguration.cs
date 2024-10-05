@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Mindmath.Domain.Constant;
+using Mindmath.Repository.Constant;
 
 namespace Mindmath.Infrastructure.Configuration
 {

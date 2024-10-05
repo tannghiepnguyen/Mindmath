@@ -1,4 +1,4 @@
-﻿namespace Mindmath.Application.ProblemTypes.DTO
+﻿namespace Mindmath.Service.ProblemTypes.DTO
 {
 	public record ProblemTypeForCreationDto
 	{

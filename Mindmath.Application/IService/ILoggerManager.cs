@@ -1,4 +1,4 @@
-﻿namespace Mindmath.Application.IService
+﻿namespace Mindmath.Service.IService
 {
 	public interface ILoggerManager
 	{

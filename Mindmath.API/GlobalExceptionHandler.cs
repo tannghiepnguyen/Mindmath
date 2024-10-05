@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
-using Mindmath.Application.IService;
-using Mindmath.Domain.ErrorModel;
-using Mindmath.Domain.Exceptions;
+using Mindmath.Repository.ErrorModel;
+using Mindmath.Repository.Exceptions;
+using Mindmath.Service.IService;
 
 namespace Mindmath.API
 {

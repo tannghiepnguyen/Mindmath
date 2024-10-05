@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
-using Mindmath.Application.Chapters.DTO;
-using Mindmath.Domain.Exceptions;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
+using Mindmath.Repository.Exceptions;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Service.Chapters.DTO;
 
-namespace Mindmath.Application.Chapters
+
+namespace Mindmath.Service.Chapters
 {
 	internal sealed class ChapterService : IChapterService
 	{
@@ -32,7 +33,8 @@ namespace Mindmath.Application.Chapters
 			chapterEntity.CreatedAt = DateTime.Now;
 			chapterEntity.UpdatedAt = DateTime.Now;
 			chapterEntity.Active = true;
-			repositoryManager.Chapters.CreateChapter(subjectId, chapterEntity);
+			chapterEntity.SubjectId = subjectId;
+			repositoryManager.Chapters.CreateChapter(chapterEntity);
 			await repositoryManager.Save();
 			return mapper.Map<ChapterReturnDto>(chapterEntity);
 		}

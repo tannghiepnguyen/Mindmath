@@ -1,13 +1,15 @@
 ﻿using AutoMapper;
-using Mindmath.Domain.Models;
+using Mindmath.Repository.Models;
 
-namespace Mindmath.Application.Users.DTO
+namespace Mindmath.Service.Users.DTO
 {
 	public class UserProfile : Profile
 	{
 		public UserProfile()
 		{
 			CreateMap<UserForRegistrationDTO, User>();
+			CreateMap<UserForUpdateDto, User>();
+			CreateMap<User, UserReturnDto>();
 		}
 	}
 }

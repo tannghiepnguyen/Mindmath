@@ -1,6 +1,6 @@
-﻿using Mindmath.Application.Subjects.DTO;
+﻿using Mindmath.Service.Subjects.DTO;
 
-namespace Mindmath.Application.Subjects
+namespace Mindmath.Service.Subjects
 {
 	public interface ISubjectService
 	{

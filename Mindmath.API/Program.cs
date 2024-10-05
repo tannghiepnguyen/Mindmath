@@ -1,6 +1,6 @@
 using Mindmath.API;
 using Mindmath.API.Extension;
-using Mindmath.Application.Extension;
+using Mindmath.Service.Extension;
 using NLog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +18,7 @@ builder.Services.AddApplicationServices();
 builder.Services.ConfigureIdentity();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureJwt(builder.Configuration);
+builder.Services.ConfigureReceiverService();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddEndpointsApiExplorer();

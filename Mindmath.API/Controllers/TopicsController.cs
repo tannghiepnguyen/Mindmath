@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mindmath.Application.IService;
-using Mindmath.Application.Topics.DTO;
+using Mindmath.Service.IService;
+using Mindmath.Service.Topics.DTO;
 
 namespace Mindmath.API.Controllers
 {
@@ -20,7 +20,7 @@ namespace Mindmath.API.Controllers
 		{
 			if (topicForCreationDto is null) return BadRequest();
 			var topicDto = await serviceManager.TopicService.CreateTopic(chapterId, topicForCreationDto, trackChange: false);
-			return CreatedAtRoute("TopicById", new { topicId = topicDto.Id, chapterId = Guid.Empty }, topicDto);
+			return CreatedAtRoute("TopicById", new { topicId = topicDto.Id, chapterId }, topicDto);
 		}
 
 		[HttpGet]

@@ -1,6 +1,6 @@
-﻿using Mindmath.Application.Chapters.DTO;
+﻿using Mindmath.Service.Chapters.DTO;
 
-namespace Mindmath.Application.Chapters
+namespace Mindmath.Service.Chapters
 {
 	public interface IChapterService
 	{

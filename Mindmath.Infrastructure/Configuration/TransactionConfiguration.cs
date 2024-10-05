@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Mindmath.Domain.Models;
+using Mindmath.Repository.Models;
 
 
 namespace Mindmath.Infrastructure.Configuration

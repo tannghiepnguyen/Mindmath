@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Mindmath.Domain.Models;
 using Mindmath.Infrastructure.Configuration;
+using Mindmath.Repository.Models;
 
-namespace Mindmath.Infrastructure.Persistence
+namespace Mindmath.Repository.Persistence
 {
 	public class MindmathDbContext : IdentityDbContext
 	{

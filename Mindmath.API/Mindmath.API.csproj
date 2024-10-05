@@ -15,8 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mindmath.Application\Mindmath.Application.csproj" />
-    <ProjectReference Include="..\Mindmath.Infrastructure\Mindmath.Infrastructure.csproj" />
+    <ProjectReference Include="..\Mindmath.Application\Mindmath.Service.csproj" />
   </ItemGroup>
 
 </Project>

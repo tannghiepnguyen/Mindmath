@@ -1,6 +1,6 @@
-﻿namespace Mindmath.Application.Users.DTO
+﻿namespace Mindmath.Service.Users.DTO
 {
-	public class UserForRegistrationDTO
+	public record UserForRegistrationDTO
 	{
 		public string Fullname { get; init; }
 		public string Gender { get; init; }

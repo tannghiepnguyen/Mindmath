@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using Mindmath.Domain.Models;
+using Mindmath.Repository.Models;
+using Mindmath.Service.Chapters.DTO;
 
 namespace Mindmath.Application.Chapters.DTO
 {

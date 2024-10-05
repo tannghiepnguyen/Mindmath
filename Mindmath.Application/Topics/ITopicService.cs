@@ -1,6 +1,6 @@
-﻿using Mindmath.Application.Topics.DTO;
+﻿using Mindmath.Service.Topics.DTO;
 
-namespace Mindmath.Application.Topics
+namespace Mindmath.Service.Topics
 {
 	public interface ITopicService
 	{

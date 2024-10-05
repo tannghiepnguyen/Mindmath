@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mindmath.Application.IService;
-using Mindmath.Application.Users.DTO;
+using Mindmath.Service.IService;
+using Mindmath.Service.Users.DTO;
 
 namespace Mindmath.API.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("api/auths")]
 	[ApiController]
 	public class AuthController : ControllerBase
 	{

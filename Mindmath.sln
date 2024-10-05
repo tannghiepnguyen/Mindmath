@@ -5,11 +5,9 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mindmath.API", "Mindmath.API\Mindmath.API.csproj", "{4A0F388B-91B8-4B45-B935-513CF0D99655}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mindmath.Application", "Mindmath.Application\Mindmath.Application.csproj", "{28854095-CE16-4BB2-A805-5B1E45C22A07}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mindmath.Service", "Mindmath.Application\Mindmath.Service.csproj", "{28854095-CE16-4BB2-A805-5B1E45C22A07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mindmath.Infrastructure", "Mindmath.Infrastructure\Mindmath.Infrastructure.csproj", "{9CCEC328-AC12-4744-87B4-CC11293F2420}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mindmath.Domain", "Mindmath.Domain\Mindmath.Domain.csproj", "{8380FBF6-BAAA-49EB-AE8F-5375B403FDF9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mindmath.Repository", "Mindmath.Infrastructure\Mindmath.Repository.csproj", "{9CCEC328-AC12-4744-87B4-CC11293F2420}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +27,6 @@ Global
 		{9CCEC328-AC12-4744-87B4-CC11293F2420}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CCEC328-AC12-4744-87B4-CC11293F2420}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CCEC328-AC12-4744-87B4-CC11293F2420}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8380FBF6-BAAA-49EB-AE8F-5375B403FDF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8380FBF6-BAAA-49EB-AE8F-5375B403FDF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8380FBF6-BAAA-49EB-AE8F-5375B403FDF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8380FBF6-BAAA-49EB-AE8F-5375B403FDF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

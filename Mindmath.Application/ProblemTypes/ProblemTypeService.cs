@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Mindmath.Application.ProblemTypes.DTO;
-using Mindmath.Domain.Exceptions;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
+using Mindmath.Repository.Exceptions;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Service.ProblemTypes.DTO;
 
-namespace Mindmath.Application.ProblemTypes
+namespace Mindmath.Service.ProblemTypes
 {
 	internal sealed class ProblemTypeService : IProblemTypeService
 	{
@@ -30,8 +30,9 @@ namespace Mindmath.Application.ProblemTypes
 			problemTypeEntity.CreatedAt = DateTime.Now;
 			problemTypeEntity.UpdatedAt = DateTime.Now;
 			problemTypeEntity.Active = true;
+			problemTypeEntity.TopicId = topicId;
 
-			repositoryManager.ProblemTypes.CreateProblemType(topicId, problemTypeEntity);
+			repositoryManager.ProblemTypes.CreateProblemType(problemTypeEntity);
 			await repositoryManager.Save();
 			return mapper.Map<ProblemTypeReturnDto>(problemTypeEntity);
 		}

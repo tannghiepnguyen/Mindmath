@@ -1,7 +1,7 @@
-﻿using Mindmath.Application.IService;
+﻿using Mindmath.Service.IService;
 using NLog;
 
-namespace Mindmath.Application.Service
+namespace Mindmath.Service.Service
 {
 	public class LoggerManager : ILoggerManager
 	{

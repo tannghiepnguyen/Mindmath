@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Mindmath.Application.Subjects.DTO;
-using Mindmath.Domain.Exceptions;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
+using Mindmath.Repository.Exceptions;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Service.Subjects.DTO;
 
-namespace Mindmath.Application.Subjects
+namespace Mindmath.Service.Subjects
 {
 	internal sealed class SubjectService : ISubjectService
 	{

@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mindmath.Domain.Repository;
-using Mindmath.Infrastructure.Persistence;
+using Mindmath.Repository.Persistence;
 using System.Linq.Expressions;
 
-namespace Mindmath.Infrastructure.Repository
+namespace Mindmath.Repository.Repository
 {
 	public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
 	{

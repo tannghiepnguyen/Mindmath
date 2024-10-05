@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Mindmath.Application.Users.DTO
+namespace Mindmath.Service.Users.DTO
 {
-	public class UserForAuthenticationDTO
+	public record UserForAuthenticationDTO
 	{
 		[Required(ErrorMessage = "Username is required")]
 		public string UserName { get; init; }

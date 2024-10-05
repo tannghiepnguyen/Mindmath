@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
-using Mindmath.Infrastructure.Persistence;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Repository.Persistence;
+using Mindmath.Repository.Repository;
 
 namespace Mindmath.Infrastructure.Repository
 {
@@ -11,11 +12,7 @@ namespace Mindmath.Infrastructure.Repository
 		{
 		}
 
-		public void CreateProblemType(Guid topicId, ProblemType problemType)
-		{
-			problemType.TopicId = topicId;
-			Create(problemType);
-		}
+		public void CreateProblemType(ProblemType problemType) => Create(problemType);
 
 		public async Task<IEnumerable<ProblemType>> GetActiveProblemTypes(Guid topicId, bool trackChange) =>
 			await FindByCondition(x => x.TopicId == topicId && x.Active, trackChange).ToListAsync();

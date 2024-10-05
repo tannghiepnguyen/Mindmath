@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mindmath.Application.Chapters.DTO;
-using Mindmath.Application.IService;
+using Mindmath.Service.Chapters.DTO;
+using Mindmath.Service.IService;
 
 namespace Mindmath.API.Controllers
 {
@@ -19,7 +19,7 @@ namespace Mindmath.API.Controllers
 		{
 			if (chapterForCreationDto is null) return BadRequest();
 			var chapterDto = await serviceManager.ChapterService.CreateChapter(subjectId, chapterForCreationDto, trackChange: false);
-			return CreatedAtRoute("ChapterById", new { chapterId = chapterDto.Id, subjectId = Guid.Empty }, chapterDto);
+			return CreatedAtRoute("ChapterById", new { chapterId = chapterDto.Id, subjectId }, chapterDto);
 		}
 
 		[HttpGet]

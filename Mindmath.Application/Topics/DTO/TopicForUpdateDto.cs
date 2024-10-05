@@ -1,4 +1,4 @@
-﻿namespace Mindmath.Application.Topics.DTO
+﻿namespace Mindmath.Service.Topics.DTO
 {
 	public record TopicForUpdateDto
 	{

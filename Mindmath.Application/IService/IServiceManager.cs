@@ -1,10 +1,11 @@
-﻿using Mindmath.Application.Chapters;
-using Mindmath.Application.ProblemTypes;
-using Mindmath.Application.Subjects;
-using Mindmath.Application.Topics;
-using Mindmath.Application.Users;
+﻿using Mindmath.Service.Chapters;
+using Mindmath.Service.InputParameters;
+using Mindmath.Service.ProblemTypes;
+using Mindmath.Service.Subjects;
+using Mindmath.Service.Topics;
+using Mindmath.Service.Users;
 
-namespace Mindmath.Application.IService
+namespace Mindmath.Service.IService
 {
 	public interface IServiceManager
 	{
@@ -13,5 +14,6 @@ namespace Mindmath.Application.IService
 		IAuthenticationService AuthenticationService { get; }
 		ITopicService TopicService { get; }
 		IProblemTypeService ProblemTypeService { get; }
+		IInputParameterService InputParameterService { get; }
 	}
 }

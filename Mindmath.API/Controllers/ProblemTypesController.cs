@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mindmath.Application.IService;
-using Mindmath.Application.ProblemTypes.DTO;
+using Mindmath.Service.IService;
+using Mindmath.Service.ProblemTypes.DTO;
 
 namespace Mindmath.API.Controllers
 {
@@ -41,7 +41,7 @@ namespace Mindmath.API.Controllers
 		{
 			if (problemTypeForCreation is null) return BadRequest();
 			var problemType = await serviceManager.ProblemTypeService.CreateProblemType(topicId, problemTypeForCreation, trackChange: false);
-			return CreatedAtRoute("ProblemTypeById", new { problemTypeId = problemType.Id, topicId = Guid.Empty }, problemType);
+			return CreatedAtRoute("ProblemTypeById", new { problemTypeId = problemType.Id, topicId }, problemType);
 		}
 
 		[HttpPut("{problemTypeId:guid}")]

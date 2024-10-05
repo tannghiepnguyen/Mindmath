@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Mindmath.Domain.Models;
-using Mindmath.Domain.Repository;
-using Mindmath.Infrastructure.Persistence;
+using Mindmath.Repository.IRepository;
+using Mindmath.Repository.Models;
+using Mindmath.Repository.Persistence;
+using Mindmath.Repository.Repository;
 
 namespace Mindmath.Infrastructure.Repository
 {
@@ -11,11 +12,7 @@ namespace Mindmath.Infrastructure.Repository
 		{
 		}
 
-		public void CreateTopic(Guid chapterId, Topic topic)
-		{
-			topic.ChapterId = chapterId;
-			Create(topic);
-		}
+		public void CreateTopic(Topic topic) => Create(topic);
 
 		public async Task<IEnumerable<Topic>> GetActiveTopics(Guid chapterId, bool trackChange) => await FindByCondition(x => x.ChapterId == chapterId && x.Active, trackChange).ToListAsync();
 
