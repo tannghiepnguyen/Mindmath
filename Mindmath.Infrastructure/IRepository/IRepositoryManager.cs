@@ -9,6 +9,7 @@
 		IWalletRepository Wallets { get; }
 		IInputParameterRepository InputParameters { get; }
 		ISolutionRepository Solutions { get; }
+		ITransactionRepository Transactions { get; }
 		Task Save();
 	}
 }

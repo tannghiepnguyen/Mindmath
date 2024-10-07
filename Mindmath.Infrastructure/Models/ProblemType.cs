@@ -10,6 +10,7 @@ namespace Mindmath.Repository.Models
 		public string Description { get; set; }
 		public DateTime CreatedAt { get; set; }
 		public DateTime UpdatedAt { get; set; }
+		public int NumberOfInputs { get; set; }
 		public bool Active { get; set; }
 		public Guid? TopicId { get; set; }
 		public Topic Topic { get; set; }

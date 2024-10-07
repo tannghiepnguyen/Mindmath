@@ -14,6 +14,7 @@ namespace Mindmath.Infrastructure.Repository
 		private readonly Lazy<IWalletRepository> _walletRepository;
 		private readonly Lazy<IInputParameterRepository> _inputParameterRepository;
 		private readonly Lazy<ISolutionRepository> _solutionRepository;
+		private readonly Lazy<ITransactionRepository> _transactionRepository;
 		public RepositoryManager(MindmathDbContext context)
 		{
 			_context = context;
@@ -24,6 +25,7 @@ namespace Mindmath.Infrastructure.Repository
 			_walletRepository = new Lazy<IWalletRepository>(() => new WalletRepository(_context));
 			_inputParameterRepository = new Lazy<IInputParameterRepository>(() => new InputParameterRepository(_context));
 			_solutionRepository = new Lazy<ISolutionRepository>(() => new SolutionRepository(_context));
+			_transactionRepository = new Lazy<ITransactionRepository>(() => new TransactionRepository(_context));
 		}
 
 		public ISubjectRepository Subjects => _subjectRepository.Value;
@@ -39,6 +41,8 @@ namespace Mindmath.Infrastructure.Repository
 		public IInputParameterRepository InputParameters => _inputParameterRepository.Value;
 
 		public ISolutionRepository Solutions => _solutionRepository.Value;
+
+		public ITransactionRepository Transactions => _transactionRepository.Value;
 
 		public async Task Save() => await _context.SaveChangesAsync();
 	}

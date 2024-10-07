@@ -14,5 +14,7 @@ namespace Mindmath.Repository.Models
 		public bool Active { get; set; }
 		public Wallet Wallet { get; set; }
 		public ICollection<InputParameter> InputParameters { get; set; }
+		public ICollection<Transaction> Transactions { get; set; }
+		public ICollection<Deposit> Deposits { get; set; }
 	}
 }

@@ -20,6 +20,8 @@ namespace Mindmath.Infrastructure.Repository
 		public async Task<InputParameter?> GetInputParameter(string userId, Guid problemTypeId, Guid inputParameterId, bool trackChange) =>
 			await FindByCondition(x => x.UserId == userId && x.ProblemTypeId == problemTypeId && x.Id == inputParameterId, trackChange).SingleOrDefaultAsync();
 
+		public async Task<InputParameter?> GetInputParameter(Guid inputParameterId, bool trackChange) => await FindByCondition(x => x.Id == inputParameterId, trackChange).SingleOrDefaultAsync();
+
 		public async Task<IEnumerable<InputParameter>> GetInputParameters(string userId, Guid problemTypeId, bool trackChange) =>
 			await FindByCondition(x => x.UserId == userId && x.ProblemTypeId == problemTypeId, trackChange).ToListAsync();
 	}
