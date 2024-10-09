@@ -8,7 +8,8 @@ namespace Mindmath.Service.Users
 	{
 		Task<IdentityResult> RegisterUser(UserForRegistrationDTO userForRegistration);
 		Task<bool> ValidateUser(UserForAuthenticationDTO userForAuthentication);
-		Task<string> CreateToken();
+		Task<TokenDto> CreateToken(bool populateExp);
+		Task<TokenDto> RefreshToken(TokenDto tokenDto);
 		Task<IdentityResult> UpdateUser(string userId, UserForUpdateDto userForUpdateDto);
 		Task<UserReturnDto> GetUserById(string userId);
 		Task<IEnumerable<UserReturnDto>> GetUsers();

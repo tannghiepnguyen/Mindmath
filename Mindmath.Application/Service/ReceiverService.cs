@@ -24,7 +24,7 @@ namespace Mindmath.Service.Service
 			this.serviceScopeFactory = serviceScopeFactory;
 			ConnectionString = this.configuration.GetSection("Redis").GetSection("ConnectionString").Value;
 			Connection = ConnectionMultiplexer.Connect(ConnectionString);
-			Channel = new RedisChannel(this.configuration.GetSection("Redis").GetSection("Channel1").Value, RedisChannel.PatternMode.Literal);
+			Channel = new RedisChannel(this.configuration.GetSection("Redis").GetSection("Channel2").Value, RedisChannel.PatternMode.Literal);
 		}
 
 		protected override async Task ExecuteAsync(CancellationToken stoppingToken)
