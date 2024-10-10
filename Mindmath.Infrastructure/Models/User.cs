@@ -7,7 +7,6 @@ namespace Mindmath.Repository.Models
 	{
 		public string Fullname { get; set; }
 		public string Gender { get; set; }
-		public DateTime DateOfBirth { get; set; }
 		public DateTime CreateAt { get; set; }
 		public DateTime UpdateAt { get; set; }
 		public string? Avatar { get; set; }

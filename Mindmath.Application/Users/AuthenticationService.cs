@@ -128,7 +128,6 @@ namespace Mindmath.Application.Users
 			claims.Add(new Claim("Email", user.Email));
 			claims.Add(new Claim("PhoneNumber", user.PhoneNumber));
 			claims.Add(new Claim("Gender", user.Gender));
-			claims.Add(new Claim("DateOfBirth", user.DateOfBirth.ToString()));
 			return claims;
 		}
 

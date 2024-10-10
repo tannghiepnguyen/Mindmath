@@ -8,7 +8,6 @@
 		public string PhoneNumber { get; init; }
 		public string Fullname { get; init; }
 		public string Gender { get; init; }
-		public DateTime DateOfBirth { get; init; }
 		public string Avatar { get; init; }
 	}
 }

@@ -1,11 +1,16 @@
-﻿namespace Mindmath.Service.Users.DTO
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Mindmath.Service.Users.DTO
 {
 	public record UserForUpdateDto
 	{
+		[Required]
 		public string Fullname { get; init; }
+		[Required]
 		public string Gender { get; init; }
-		public DateTime DateOfBirth { get; init; }
+		[Required]
 		public string Email { get; init; }
+		[Required]
 		public string PhoneNumber { get; init; }
 	}
 }
