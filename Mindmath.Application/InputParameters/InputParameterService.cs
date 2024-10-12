@@ -66,8 +66,8 @@ namespace Mindmath.Service.InputParameters
 			RedisValue redisValue = new RedisValue(inputParameterJson);
 			await subscriber.PublishAsync(Channel, redisValue);
 
-			//repositoryManager.InputParameters.CreateInputParameter(inputParameterEntity);
-			//await repositoryManager.Save();
+			repositoryManager.InputParameters.CreateInputParameter(inputParameterEntity);
+			await repositoryManager.Save();
 			return mapper.Map<InputParameterReturnDto>(inputParameterEntity);
 		}
 

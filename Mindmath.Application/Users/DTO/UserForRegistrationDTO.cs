@@ -7,8 +7,6 @@ namespace Mindmath.Service.Users.DTO
 		[Required]
 		public string Fullname { get; init; }
 		[Required]
-		public string Gender { get; init; }
-		[Required]
 		public string Email { get; init; }
 		[Required]
 		public string Password { get; init; }
