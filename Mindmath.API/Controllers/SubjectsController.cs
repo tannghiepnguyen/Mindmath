@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Mindmath.Repository.Constant;
 using Mindmath.Service.IService;
 using Mindmath.Service.Subjects.DTO;
 
@@ -16,6 +18,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> Add([FromBody] SubjectForCreationDto subjectForCreationDto)
 		{
 			if (subjectForCreationDto is null) return BadRequest();
@@ -24,6 +27,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> GetAll()
 		{
 			var subjects = await serviceManager.SubjectService.GetSubjects(trackChange: false);
@@ -31,6 +35,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet("{subjectId:guid}", Name = "SubjectById")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> GetById(Guid subjectId)
 		{
 			var subject = await serviceManager.SubjectService.GetSubject(subjectId, trackChange: false);
@@ -38,6 +43,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet("active")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> GetActive()
 		{
 			var activeSubjects = await serviceManager.SubjectService.GetActiveSubjects(trackChange: false);
@@ -45,6 +51,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPut("{subjectId:guid}")]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> Update(Guid subjectId, [FromBody] SubjectForUpdateDto subjectForUpdate)
 		{
 			await serviceManager.SubjectService.UpdateSubject(subjectId, subjectForUpdate, trackChange: true);

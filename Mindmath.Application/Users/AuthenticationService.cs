@@ -120,7 +120,7 @@ namespace Mindmath.Application.Users
 			var roles = await userManager.GetRolesAsync(user);
 			foreach (var role in roles)
 			{
-				claims.Add(new Claim("Roles", role));
+				claims.Add(new Claim(ClaimTypes.Role, role));
 			}
 			claims.Add(new Claim("Fullname", user.Fullname));
 			claims.Add(new Claim("Id", user.Id));

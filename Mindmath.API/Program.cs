@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.OpenApi.Models;
 using Mindmath.API;
 using Mindmath.API.Extension;
 using Mindmath.Service.Extension;
@@ -22,9 +24,36 @@ builder.Services.ConfigureReceiverService();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c =>
+builder.Services.AddSwaggerGen(option =>
 {
-	c.MapType<DateOnly>(() => new Microsoft.OpenApi.Models.OpenApiSchema { Type = "string", Format = "date" });
+	option.MapType<DateOnly>(() => new Microsoft.OpenApi.Models.OpenApiSchema { Type = "string", Format = "date" });
+	option.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new Microsoft.OpenApi.Models.OpenApiSecurityScheme()
+	{
+		Description =
+			"JWT Authorization header using the Bearer scheme. \r\n\r\n" +
+			"Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\n" +
+			"Example: \"Bearer 12345abcdef\"",
+		Name = "Authorization",
+		In = ParameterLocation.Header,
+		Scheme = JwtBearerDefaults.AuthenticationScheme
+	});
+	option.AddSecurityRequirement(new OpenApiSecurityRequirement()
+	{
+		{
+			new OpenApiSecurityScheme()
+			{
+				Reference = new OpenApiReference()
+				{
+					Type = ReferenceType.SecurityScheme,
+					Id = "Bearer"
+				},
+				Scheme = "oath2",
+				Name = "Bearer",
+				In = ParameterLocation.Header
+			},
+			new List<string>()
+		}
+	});
 });
 
 
