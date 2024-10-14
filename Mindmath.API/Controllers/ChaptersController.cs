@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Mindmath.Repository.Constant;
 using Mindmath.Service.Chapters.DTO;
 using Mindmath.Service.IService;
 
@@ -15,6 +17,7 @@ namespace Mindmath.API.Controllers
 			this.serviceManager = serviceManager;
 		}
 		[HttpPost]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> Add([FromBody] ChapterForCreationDto chapterForCreationDto, [FromRoute] Guid subjectId)
 		{
 			if (chapterForCreationDto is null) return BadRequest();
@@ -23,6 +26,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> GetAll([FromRoute] Guid subjectId)
 		{
 			var chapters = await serviceManager.ChapterService.GetChapters(subjectId, trackChange: false);
@@ -30,6 +34,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet("active")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> GetActive([FromRoute] Guid subjectId)
 		{
 			var chapters = await serviceManager.ChapterService.GetActiveChapters(subjectId, trackChange: false);
@@ -37,6 +42,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet("{chapterId:guid}", Name = "ChapterById")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> GetById([FromRoute] Guid chapterId, [FromRoute] Guid subjectId)
 		{
 			var chapter = await serviceManager.ChapterService.GetChapter(subjectId, chapterId, trackChange: false);
@@ -44,6 +50,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPut("{chapterId:guid}")]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> Update([FromRoute] Guid chapterId, [FromBody] ChapterForUpdateDto chapterForUpdate, [FromRoute] Guid subjectId)
 		{
 			await serviceManager.ChapterService.UpdateChapter(subjectId, chapterId, chapterForUpdate, chapterTrackChange: true, subjectTrackChange: false);

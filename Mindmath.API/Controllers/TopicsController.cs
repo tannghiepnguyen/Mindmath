@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Mindmath.Repository.Constant;
 using Mindmath.Service.IService;
 using Mindmath.Service.Topics.DTO;
 
@@ -16,6 +18,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPost]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> Add([FromBody] TopicForCreationDto topicForCreationDto, [FromRoute] Guid chapterId)
 		{
 			if (topicForCreationDto is null) return BadRequest();
@@ -24,6 +27,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> GetAll([FromRoute] Guid chapterId)
 		{
 			var topics = await serviceManager.TopicService.GetTopics(chapterId, trackChange: false);
@@ -31,6 +35,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet("active")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> GetActive([FromRoute] Guid chapterId)
 		{
 			var topics = await serviceManager.TopicService.GetActiveTopics(chapterId, trackChange: false);
@@ -38,6 +43,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet("{topicId:guid}", Name = "TopicById")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> GetById([FromRoute] Guid topicId, [FromRoute] Guid chapterId)
 		{
 			var topic = await serviceManager.TopicService.GetTopic(chapterId, topicId, trackChange: false);
@@ -45,6 +51,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPut("{topicId:guid}")]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> Update([FromRoute] Guid topicId, [FromBody] TopicForUpdateDto topicForUpdate, [FromRoute] Guid chapterId)
 		{
 			await serviceManager.TopicService.UpdateTopic(chapterId, topicId, topicForUpdate, chapterTrackChange: false, topicTrackChange: true);

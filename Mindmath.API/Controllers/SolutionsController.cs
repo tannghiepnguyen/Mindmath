@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Mindmath.Repository.Constant;
 using Mindmath.Service.IService;
 
 namespace Mindmath.API.Controllers
@@ -15,6 +17,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet("{inputParameterId:guid}")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> GetSolutionByInputParameterId([FromRoute] Guid inputParameterId)
 		{
 			var solution = await serviceManager.SolutionService.GetSolutionByInputParameterId(inputParameterId, trackChange: false);

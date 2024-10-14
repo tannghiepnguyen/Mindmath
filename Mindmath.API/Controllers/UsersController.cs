@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Mindmath.Repository.Constant;
 using Mindmath.Service.IService;
 using Mindmath.Service.Users.DTO;
 
@@ -16,6 +18,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet]
+		[Authorize(Roles = Roles.Admin)]
 		public async Task<IActionResult> GetUsers()
 		{
 			var users = await serviceManager.AuthenticationService.GetUsers();
@@ -23,6 +26,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpGet("{id}")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> GetUserById(string id)
 		{
 			var user = await serviceManager.AuthenticationService.GetUserById(id);
@@ -30,6 +34,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPut("{userId}")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> UpdateUser([FromRoute] string userId, [FromBody] UserForUpdateDto userForRegistrationDTO)
 		{
 			var result = await serviceManager.AuthenticationService.UpdateUser(userId, userForRegistrationDTO);
@@ -47,6 +52,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPut("{userId}/password")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> UpdateUserPassword([FromRoute] string userId, [FromBody] UserForUpdatePasswordDto userForUpdatePasswordDto)
 		{
 			var result = await serviceManager.AuthenticationService.UpdateUserPassword(userId, userForUpdatePasswordDto);
