@@ -7,7 +7,7 @@
 		public string Email { get; init; }
 		public string PhoneNumber { get; init; }
 		public string Fullname { get; init; }
-		public string Gender { get; init; }
-		public string Avatar { get; init; }
+		public bool Active { get; init; }
+		public IList<string> Roles { get; set; }
 	}
 }

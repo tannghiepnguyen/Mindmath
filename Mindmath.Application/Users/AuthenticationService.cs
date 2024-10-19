@@ -187,13 +187,22 @@ namespace Mindmath.Application.Users
 			var user = await userManager.FindByIdAsync(userId);
 			if (user is null) throw new UserNotFoundException(userId);
 
-			return mapper.Map<UserReturnDto>(user);
+			var returnUser = mapper.Map<UserReturnDto>(user);
+			returnUser.Roles = userManager.GetRolesAsync(user).Result.ToList();
+
+			return returnUser;
 		}
 
 		public async Task<IEnumerable<UserReturnDto>> GetUsers()
 		{
 			var users = await userManager.Users.ToListAsync();
-			return mapper.Map<IEnumerable<UserReturnDto>>(users);
+			var returnUsers = mapper.Map<IEnumerable<UserReturnDto>>(users);
+			returnUsers = returnUsers.Select(user =>
+			{
+				user.Roles = userManager.GetRolesAsync(users.FirstOrDefault(u => u.Id == user.Id)).Result.ToList();
+				return user;
+			}).Where(c => !c.Roles.Contains(Roles.Admin));
+			return returnUsers;
 		}
 
 		public async Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
