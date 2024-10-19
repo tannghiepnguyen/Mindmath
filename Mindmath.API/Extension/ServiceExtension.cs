@@ -17,7 +17,8 @@ namespace Mindmath.API.Extension
 				{
 					builder.AllowAnyOrigin()
 						.AllowAnyMethod()
-						.AllowAnyHeader();
+						.AllowAnyHeader()
+						.WithExposedHeaders("X-Pagination");
 				});
 			});
 		}
