@@ -1,11 +1,13 @@
 ﻿using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 
 namespace Mindmath.Repository.IRepository
 {
 	public interface ITopicRepository
 	{
-		Task<IEnumerable<Topic>> GetTopics(Guid chapterId, bool trackChange);
-		Task<IEnumerable<Topic>> GetActiveTopics(Guid chapterId, bool trackChange);
+		Task<PagedList<Topic>> GetTopics(Guid chapterId, TopicParameters topicParameters, bool trackChange);
+		Task<PagedList<Topic>> GetActiveTopics(Guid chapterId, TopicParameters topicParameters, bool trackChange);
 		Task<Topic?> GetTopic(Guid chapterId, Guid id, bool trackChange);
 		Task<Topic?> GetTopic(Guid id, bool trackChange);
 		void CreateTopic(Topic topic);

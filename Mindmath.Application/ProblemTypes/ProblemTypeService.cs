@@ -2,6 +2,8 @@
 using Mindmath.Repository.Exceptions;
 using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.ProblemTypes.DTO;
 
 namespace Mindmath.Service.ProblemTypes
@@ -37,12 +39,13 @@ namespace Mindmath.Service.ProblemTypes
 			return mapper.Map<ProblemTypeReturnDto>(problemTypeEntity);
 		}
 
-		public async Task<IEnumerable<ProblemTypeReturnDto>> GetActiveProblemTypes(Guid topicId, bool trackChange)
+		public async Task<(IEnumerable<ProblemTypeReturnDto> problemTypes, MetaData metaData)> GetActiveProblemTypes(Guid topicId, ProblemTypeParameters problemTypeParameters, bool trackChange)
 		{
 			await CheckTopicExist(topicId, trackChange);
 
-			var activeProblemTypes = await repositoryManager.ProblemTypes.GetActiveProblemTypes(topicId, trackChange);
-			return mapper.Map<IEnumerable<ProblemTypeReturnDto>>(activeProblemTypes);
+			var activeProblemTypesMetaData = await repositoryManager.ProblemTypes.GetActiveProblemTypes(topicId, problemTypeParameters, trackChange);
+			var activeProblemTypes = mapper.Map<IEnumerable<ProblemTypeReturnDto>>(activeProblemTypesMetaData);
+			return (activeProblemTypes, activeProblemTypesMetaData.MetaData);
 		}
 
 		public async Task<ProblemTypeReturnDto?> GetProblemType(Guid topicId, Guid id, bool trackChange)
@@ -55,12 +58,13 @@ namespace Mindmath.Service.ProblemTypes
 			return mapper.Map<ProblemTypeReturnDto?>(problemType);
 		}
 
-		public async Task<IEnumerable<ProblemTypeReturnDto>> GetProblemTypes(Guid topicId, bool trackChange)
+		public async Task<(IEnumerable<ProblemTypeReturnDto> problemTypes, MetaData metaData)> GetProblemTypes(Guid topicId, ProblemTypeParameters problemTypeParameters, bool trackChange)
 		{
 			await CheckTopicExist(topicId, trackChange);
 
-			var problemTypes = await repositoryManager.ProblemTypes.GetProblemTypes(topicId, trackChange);
-			return mapper.Map<IEnumerable<ProblemTypeReturnDto>>(problemTypes);
+			var activeProblemTypesMetaData = await repositoryManager.ProblemTypes.GetProblemTypes(topicId, problemTypeParameters, trackChange);
+			var activeProblemTypes = mapper.Map<IEnumerable<ProblemTypeReturnDto>>(activeProblemTypesMetaData);
+			return (activeProblemTypes, activeProblemTypesMetaData.MetaData);
 		}
 
 		public async Task UpdateProblemType(Guid topicId, Guid id, ProblemTypeForUpdateDto problemTypeForUpdate, bool topicTrackChange, bool problemTypeTrackChange)

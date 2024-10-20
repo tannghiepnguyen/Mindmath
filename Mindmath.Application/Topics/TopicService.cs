@@ -2,6 +2,8 @@
 using Mindmath.Repository.Exceptions;
 using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.Topics.DTO;
 
 namespace Mindmath.Service.Topics
@@ -37,12 +39,13 @@ namespace Mindmath.Service.Topics
 			return mapper.Map<TopicReturnDto>(topicEntity);
 		}
 
-		public async Task<IEnumerable<TopicReturnDto>> GetActiveTopics(Guid chapterId, bool trackChange)
+		public async Task<(IEnumerable<TopicReturnDto> topics, MetaData metaData)> GetActiveTopics(Guid chapterId, TopicParameters topicParameters, bool trackChange)
 		{
 			await CheckChapterExist(chapterId, trackChange);
 
-			var activeTopics = await repositoryManager.Topics.GetActiveTopics(chapterId, trackChange);
-			return mapper.Map<IEnumerable<TopicReturnDto>>(activeTopics);
+			var activeTopicsMetaData = await repositoryManager.Topics.GetActiveTopics(chapterId, topicParameters, trackChange);
+			var activeTopics = mapper.Map<IEnumerable<TopicReturnDto>>(activeTopicsMetaData);
+			return (activeTopics, activeTopicsMetaData.MetaData);
 		}
 
 		public async Task<TopicReturnDto?> GetTopic(Guid chapterId, Guid id, bool trackChange)
@@ -55,12 +58,13 @@ namespace Mindmath.Service.Topics
 			return mapper.Map<TopicReturnDto?>(topic);
 		}
 
-		public async Task<IEnumerable<TopicReturnDto>> GetTopics(Guid chapterId, bool trackChange)
+		public async Task<(IEnumerable<TopicReturnDto> topics, MetaData metaData)> GetTopics(Guid chapterId, TopicParameters topicParameters, bool trackChange)
 		{
 			await CheckChapterExist(chapterId, trackChange);
 
-			var topics = await repositoryManager.Topics.GetTopics(chapterId, trackChange);
-			return mapper.Map<IEnumerable<TopicReturnDto>>(topics);
+			var topicsMetaData = await repositoryManager.Topics.GetTopics(chapterId, topicParameters, trackChange);
+			var topics = mapper.Map<IEnumerable<TopicReturnDto>>(topicsMetaData);
+			return (topics, topicsMetaData.MetaData);
 		}
 
 		public async Task UpdateTopic(Guid chapterId, Guid id, TopicForUpdateDto topicForUpdate, bool chapterTrackChange, bool topicTrackChange)

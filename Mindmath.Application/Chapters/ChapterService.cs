@@ -2,6 +2,8 @@
 using Mindmath.Repository.Exceptions;
 using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.Chapters.DTO;
 
 
@@ -39,12 +41,13 @@ namespace Mindmath.Service.Chapters
 			return mapper.Map<ChapterReturnDto>(chapterEntity);
 		}
 
-		public async Task<IEnumerable<ChapterReturnDto>> GetActiveChapters(Guid subjectId, bool trackChange)
+		public async Task<(IEnumerable<ChapterReturnDto> chapters, MetaData metaData)> GetActiveChapters(Guid subjectId, ChapterParameters chapterParameters, bool trackChange)
 		{
 			await CheckSubjectExist(subjectId, trackChange);
 
-			var activeChapters = await repositoryManager.Chapters.GetActiveChapters(subjectId, trackChange);
-			return mapper.Map<IEnumerable<ChapterReturnDto>>(activeChapters);
+			var activeChaptersWithMetaData = await repositoryManager.Chapters.GetActiveChapters(subjectId, chapterParameters, trackChange);
+			var activeChapters = mapper.Map<IEnumerable<ChapterReturnDto>>(activeChaptersWithMetaData);
+			return (activeChapters, activeChaptersWithMetaData.MetaData);
 		}
 
 		public async Task<ChapterReturnDto?> GetChapter(Guid subjectId, Guid id, bool trackChange)
@@ -57,12 +60,13 @@ namespace Mindmath.Service.Chapters
 			return mapper.Map<ChapterReturnDto?>(chapter);
 		}
 
-		public async Task<IEnumerable<ChapterReturnDto>> GetChapters(Guid subjectId, bool trackChange)
+		public async Task<(IEnumerable<ChapterReturnDto> chapters, MetaData metaData)> GetChapters(Guid subjectId, ChapterParameters chapterParameters, bool trackChange)
 		{
 			await CheckSubjectExist(subjectId, trackChange);
 
-			var chapters = await repositoryManager.Chapters.GetChapters(subjectId, trackChange);
-			return mapper.Map<IEnumerable<ChapterReturnDto>>(chapters);
+			var chaptersWithMetaData = await repositoryManager.Chapters.GetChapters(subjectId, chapterParameters, trackChange);
+			var chapters = mapper.Map<IEnumerable<ChapterReturnDto>>(chaptersWithMetaData);
+			return (chapters, chaptersWithMetaData.MetaData);
 		}
 
 		public async Task UpdateChapter(Guid subjectId, Guid id, ChapterForUpdateDto chapterForUpdate, bool chapterTrackChange, bool subjectTrackChange)

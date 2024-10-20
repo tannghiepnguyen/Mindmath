@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mindmath.Repository.Constant;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.IService;
 using Mindmath.Service.Topics.DTO;
+using System.Text.Json;
 
 namespace Mindmath.API.Controllers
 {
@@ -28,18 +30,20 @@ namespace Mindmath.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = Roles.Admin)]
-		public async Task<IActionResult> GetAll([FromRoute] Guid chapterId)
+		public async Task<IActionResult> GetAll([FromRoute] Guid chapterId, [FromQuery] TopicParameters topicParameters)
 		{
-			var topics = await serviceManager.TopicService.GetTopics(chapterId, trackChange: false);
-			return Ok(topics);
+			var topics = await serviceManager.TopicService.GetTopics(chapterId, topicParameters, trackChange: false);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(topics.metaData));
+			return Ok(topics.topics);
 		}
 
 		[HttpGet("active")]
 		[Authorize(Roles = Roles.Teacher)]
-		public async Task<IActionResult> GetActive([FromRoute] Guid chapterId)
+		public async Task<IActionResult> GetActive([FromRoute] Guid chapterId, [FromQuery] TopicParameters topicParameters)
 		{
-			var topics = await serviceManager.TopicService.GetActiveTopics(chapterId, trackChange: false);
-			return Ok(topics);
+			var topics = await serviceManager.TopicService.GetActiveTopics(chapterId, topicParameters, trackChange: false);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(topics.metaData));
+			return Ok(topics.topics);
 		}
 
 		[HttpGet("{topicId:guid}", Name = "TopicById")]

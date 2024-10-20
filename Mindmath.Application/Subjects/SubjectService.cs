@@ -2,6 +2,8 @@
 using Mindmath.Repository.Exceptions;
 using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.Subjects.DTO;
 
 namespace Mindmath.Service.Subjects
@@ -28,10 +30,11 @@ namespace Mindmath.Service.Subjects
 			return mapper.Map<SubjectReturnDto>(subjectEntity);
 		}
 
-		public async Task<IEnumerable<SubjectReturnDto>> GetActiveSubjects(bool trackChange)
+		public async Task<(IEnumerable<SubjectReturnDto> subjects, MetaData metaData)> GetActiveSubjects(SubjectParameters subjectParameters, bool trackChange)
 		{
-			var activeSubjects = await repositoryManager.Subjects.GetActiveSubjects(trackChange);
-			return mapper.Map<IEnumerable<SubjectReturnDto>>(activeSubjects);
+			var activeSubjectsWithMetaData = await repositoryManager.Subjects.GetActiveSubjects(subjectParameters, trackChange);
+			var activeSubjects = mapper.Map<IEnumerable<SubjectReturnDto>>(activeSubjectsWithMetaData);
+			return (activeSubjects, activeSubjectsWithMetaData.MetaData);
 		}
 
 		public async Task<SubjectReturnDto?> GetSubject(Guid id, bool trackChange)
@@ -41,11 +44,11 @@ namespace Mindmath.Service.Subjects
 			return mapper.Map<SubjectReturnDto?>(subject);
 		}
 
-		public async Task<IEnumerable<SubjectReturnDto>> GetSubjects(bool trackChange)
+		public async Task<(IEnumerable<SubjectReturnDto> subjects, MetaData metaData)> GetSubjects(SubjectParameters subjectParameters, bool trackChange)
 		{
-			var subjects = await repositoryManager.Subjects.GetSubjects(trackChange);
-			await repositoryManager.Save();
-			return mapper.Map<IEnumerable<SubjectReturnDto>>(subjects);
+			var subjectsWithMetaData = await repositoryManager.Subjects.GetSubjects(subjectParameters, trackChange);
+			var subjects = mapper.Map<IEnumerable<SubjectReturnDto>>(subjectsWithMetaData);
+			return (subjects, subjectsWithMetaData.MetaData);
 		}
 
 		public async Task UpdateSubject(Guid id, SubjectForUpdateDto subjectForUpdate, bool trackChange)

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mindmath.Repository.Constant;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.IService;
 using Mindmath.Service.Subjects.DTO;
+using Newtonsoft.Json;
 
 namespace Mindmath.API.Controllers
 {
@@ -28,10 +30,11 @@ namespace Mindmath.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = Roles.Admin)]
-		public async Task<IActionResult> GetAll()
+		public async Task<IActionResult> GetAll([FromQuery] SubjectParameters subjectParameters)
 		{
-			var subjects = await serviceManager.SubjectService.GetSubjects(trackChange: false);
-			return Ok(subjects);
+			var subjects = await serviceManager.SubjectService.GetSubjects(subjectParameters, trackChange: false);
+			Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(subjects.metaData));
+			return Ok(subjects.subjects);
 		}
 
 		[HttpGet("{subjectId:guid}", Name = "SubjectById")]
@@ -44,10 +47,11 @@ namespace Mindmath.API.Controllers
 
 		[HttpGet("active")]
 		[Authorize(Roles = Roles.Teacher)]
-		public async Task<IActionResult> GetActive()
+		public async Task<IActionResult> GetActive([FromQuery] SubjectParameters subjectParameters)
 		{
-			var activeSubjects = await serviceManager.SubjectService.GetActiveSubjects(trackChange: false);
-			return Ok(activeSubjects);
+			var activeSubjects = await serviceManager.SubjectService.GetActiveSubjects(subjectParameters, trackChange: false);
+			Response.Headers.Append("X-Pagination", JsonConvert.SerializeObject(activeSubjects.metaData));
+			return Ok(activeSubjects.subjects);
 		}
 
 		[HttpPut("{subjectId:guid}")]

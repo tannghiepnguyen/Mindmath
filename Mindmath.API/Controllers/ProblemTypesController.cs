@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mindmath.Repository.Constant;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.IService;
 using Mindmath.Service.ProblemTypes.DTO;
+using System.Text.Json;
 
 namespace Mindmath.API.Controllers
 {
@@ -19,23 +21,25 @@ namespace Mindmath.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = Roles.Admin)]
-		public async Task<IActionResult> GetProblemTypes(Guid topicId)
+		public async Task<IActionResult> GetProblemTypes([FromRoute] Guid topicId, [FromQuery] ProblemTypeParameters problemTypeParameters)
 		{
-			var problemTypes = await serviceManager.ProblemTypeService.GetProblemTypes(topicId, trackChange: false);
-			return Ok(problemTypes);
+			var problemTypes = await serviceManager.ProblemTypeService.GetProblemTypes(topicId, problemTypeParameters, trackChange: false);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(problemTypes.metaData));
+			return Ok(problemTypes.problemTypes);
 		}
 
 		[HttpGet("active")]
 		[Authorize(Roles = Roles.Teacher)]
-		public async Task<IActionResult> GetActiveProblemTypes(Guid topicId)
+		public async Task<IActionResult> GetActiveProblemTypes([FromRoute] Guid topicId, [FromQuery] ProblemTypeParameters problemTypeParameters)
 		{
-			var problemTypes = await serviceManager.ProblemTypeService.GetActiveProblemTypes(topicId, trackChange: false);
-			return Ok(problemTypes);
+			var problemTypes = await serviceManager.ProblemTypeService.GetActiveProblemTypes(topicId, problemTypeParameters, trackChange: false);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(problemTypes.metaData));
+			return Ok(problemTypes.problemTypes);
 		}
 
 		[HttpGet("{problemTypeId:guid}", Name = "ProblemTypeById")]
 		[Authorize(Roles = Roles.Teacher)]
-		public async Task<IActionResult> GetProblemType(Guid topicId, Guid problemTypeId)
+		public async Task<IActionResult> GetProblemType([FromRoute] Guid topicId, [FromRoute] Guid problemTypeId)
 		{
 			var problemType = await serviceManager.ProblemTypeService.GetProblemType(topicId, problemTypeId, trackChange: false);
 			return Ok(problemType);
@@ -43,7 +47,7 @@ namespace Mindmath.API.Controllers
 
 		[HttpPost]
 		[Authorize(Roles = Roles.Admin)]
-		public async Task<IActionResult> AddProblemType(Guid topicId, [FromBody] ProblemTypeForCreationDto problemTypeForCreation)
+		public async Task<IActionResult> AddProblemType([FromRoute] Guid topicId, [FromBody] ProblemTypeForCreationDto problemTypeForCreation)
 		{
 			if (problemTypeForCreation is null) return BadRequest();
 			var problemType = await serviceManager.ProblemTypeService.CreateProblemType(topicId, problemTypeForCreation, trackChange: false);
