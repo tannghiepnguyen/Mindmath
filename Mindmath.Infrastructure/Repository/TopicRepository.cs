@@ -16,20 +16,20 @@ namespace Mindmath.Infrastructure.Repository
 
 		public void CreateTopic(Topic topic) => Create(topic);
 
-		public async Task<PagedList<Topic>> GetActiveTopics(Guid chapterId, ChapterParameters chapterParameters, bool trackChange)
+		public async Task<PagedList<Topic>> GetActiveTopics(Guid chapterId, TopicParameters topicParameters, bool trackChange)
 		{
 			var topics = FindByCondition(x => x.ChapterId == chapterId && x.Active, trackChange);
-			return PagedList<Topic>.ToPagedList(topics, chapterParameters.PageNumber, chapterParameters.PageSize);
+			return PagedList<Topic>.ToPagedList(topics, topicParameters.PageNumber, topicParameters.PageSize);
 		}
 
 		public async Task<Topic?> GetTopic(Guid chapterId, Guid id, bool trackChange) => await FindByCondition(x => x.ChapterId == chapterId && x.Id == id, trackChange).SingleOrDefaultAsync();
 
 		public async Task<Topic?> GetTopic(Guid id, bool trackChange) => await FindByCondition(x => x.Id == id, trackChange).SingleOrDefaultAsync();
 
-		public async Task<PagedList<Topic>> GetTopics(Guid chapterId, ChapterParameters chapterParameters, bool trackChange)
+		public async Task<PagedList<Topic>> GetTopics(Guid chapterId, TopicParameters topicParameters, bool trackChange)
 		{
 			var topics = FindByCondition(x => x.ChapterId == chapterId, trackChange);
-			return PagedList<Topic>.ToPagedList(topics, chapterParameters.PageNumber, chapterParameters.PageSize);
+			return PagedList<Topic>.ToPagedList(topics, topicParameters.PageNumber, topicParameters.PageSize);
 		}
 	}
 }

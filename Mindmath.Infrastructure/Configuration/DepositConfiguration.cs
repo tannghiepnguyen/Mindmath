@@ -12,6 +12,7 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.Property(x => x.Amount).IsRequired();
 			builder.Property(x => x.Description).IsRequired();
 			builder.Property(x => x.CreatedAt).IsRequired();
+			builder.Property(x => x.Status).IsRequired();
 			builder.HasOne(x => x.User).WithMany(x => x.Deposits).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
 		}
 	}
