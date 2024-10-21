@@ -12,8 +12,8 @@ using Mindmath.Repository.Persistence;
 namespace Mindmath.Repository.Migrations
 {
     [DbContext(typeof(MindmathDbContext))]
-    [Migration("20241021021356_AddStatusColumn")]
-    partial class AddStatusColumn
+    [Migration("20241021071420_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -225,6 +225,18 @@ namespace Mindmath.Repository.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "a4a224cf-972f-4a97-bf9f-393896af2a0b",
+                            RoleId = "e2c41f1e-bc94-42f8-beb5-10d3a2a406dd"
+                        },
+                        new
+                        {
+                            UserId = "a4a224cf-972f-4a97-bf9f-393896af2a0b",
+                            RoleId = "ab84eb31-7aaa-4e44-8aa9-409be54014c8"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
@@ -283,41 +295,41 @@ namespace Mindmath.Repository.Migrations
                         {
                             Id = new Guid("cdf594dd-ccc1-4ea8-96a0-050373ef9798"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(6981),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(6019),
                             Description = "This chapter deals with trigonometry and its applications in solving problems related to triangles and other geometric shapes.",
                             Name = "Trigonometry",
                             SubjectId = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(6983)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(6022)
                         },
                         new
                         {
                             Id = new Guid("93d95c83-6594-465d-a906-7f8f899a2bfc"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(6988),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(6026),
                             Description = "This chapter deals with calculus and its applications in solving problems related to rates of change and accumulation.",
                             Name = "Calculus",
                             SubjectId = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(6988)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(6027)
                         },
                         new
                         {
                             Id = new Guid("564396d4-d864-49c2-a16c-122114f2e9b4"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(6991),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(6030),
                             Description = "This chapter deals with algebra and its applications in solving problems related to equations and inequalities.",
                             Name = "Algebra",
                             SubjectId = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(6992)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(6030)
                         },
                         new
                         {
                             Id = new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(6994),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(6033),
                             Description = "This chapter is a branch of mathematics that deals with the properties, relationships, and measurements of points, lines, shapes, and spaces. It is one of the oldest fields of mathematics and has wide applications in various fields, from art and architecture to engineering and physics",
                             Name = "Geometry",
                             SubjectId = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(6995)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(6033)
                         });
                 });
 
@@ -425,45 +437,45 @@ namespace Mindmath.Repository.Migrations
                         {
                             Id = new Guid("46e5e215-6d10-443d-9ce0-e5f7d3948232"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 541, DateTimeKind.Local).AddTicks(857),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 563, DateTimeKind.Local).AddTicks(53),
                             Description = "Use the formula to find the circumference.",
                             Name = "Circumference of a Circle",
                             NumberOfInputs = 1,
                             TopicId = new Guid("37f7aef3-f5ec-4f95-bc88-ab929877b3d5"),
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 541, DateTimeKind.Local).AddTicks(860)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 563, DateTimeKind.Local).AddTicks(56)
                         },
                         new
                         {
                             Id = new Guid("9e6d4852-9316-4006-ac2d-2e116d1fa233"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 541, DateTimeKind.Local).AddTicks(868),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 563, DateTimeKind.Local).AddTicks(62),
                             Description = "Use the formula to find the area.",
                             Name = "Area of a Circle",
                             NumberOfInputs = 1,
                             TopicId = new Guid("37f7aef3-f5ec-4f95-bc88-ab929877b3d5"),
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 541, DateTimeKind.Local).AddTicks(869)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 563, DateTimeKind.Local).AddTicks(62)
                         },
                         new
                         {
                             Id = new Guid("16a537b0-b0f8-47a5-8098-bc86926e3aa1"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 541, DateTimeKind.Local).AddTicks(871),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 563, DateTimeKind.Local).AddTicks(65),
                             Description = "Use the formula to find the perimeter.",
                             Name = "Perimeter of a triangle",
                             NumberOfInputs = 3,
                             TopicId = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 541, DateTimeKind.Local).AddTicks(872)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 563, DateTimeKind.Local).AddTicks(65)
                         },
                         new
                         {
                             Id = new Guid("93b76880-6e22-42f3-ad53-aa5490b6b31a"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 541, DateTimeKind.Local).AddTicks(874),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 563, DateTimeKind.Local).AddTicks(68),
                             Description = "Use the formula to find the area.",
                             Name = "Area of a triangle",
                             NumberOfInputs = 2,
                             TopicId = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 541, DateTimeKind.Local).AddTicks(875)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 563, DateTimeKind.Local).AddTicks(69)
                         });
                 });
 
@@ -541,10 +553,10 @@ namespace Mindmath.Repository.Migrations
                         {
                             Id = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
                             Active = true,
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(5259),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(4489),
                             Description = "The study of numbers, quantities, structures, shapes, space, and change. It involves abstract concepts as well as practical problem-solving techniques that are essential in various fields such as science, engineering, economics, and more.",
                             Name = "Mathematics",
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(5333)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(4499)
                         });
                 });
 
@@ -588,50 +600,50 @@ namespace Mindmath.Repository.Migrations
                             Id = new Guid("3e552a68-c165-4007-a361-adc57e728193"),
                             Active = true,
                             ChapterId = new Guid("564396d4-d864-49c2-a16c-122114f2e9b4"),
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8510),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7637),
                             Description = "Covers solving linear equations and inequalities. Focuses on understanding equality and inequality symbols and how to manipulate equations to isolate variables.",
                             Name = "Equations and Inequalities",
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8513)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7640)
                         },
                         new
                         {
                             Id = new Guid("d296dbc2-f3a9-4bcd-85c1-cbb8f89ed3a8"),
                             Active = true,
                             ChapterId = new Guid("564396d4-d864-49c2-a16c-122114f2e9b4"),
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8519),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7645),
                             Description = "Deals with equations involving two variables. Focuses on graphing these equations on a coordinate plane and understanding their geometric interpretation.",
                             Name = "Linear Equations",
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8519)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7645)
                         },
                         new
                         {
                             Id = new Guid("66942ddf-c7c3-4a36-b8d3-a4b037ef8d1a"),
                             Active = true,
                             ChapterId = new Guid("564396d4-d864-49c2-a16c-122114f2e9b4"),
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8522),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7648),
                             Description = "Introduction to quadratic equations and methods for solving them such as factoring, completing the square, and using the quadratic formula.",
                             Name = "Quadratic Equations",
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8523)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7649)
                         },
                         new
                         {
                             Id = new Guid("f5a42f20-64ef-43b6-aeef-a4686a3b19dd"),
                             Active = true,
                             ChapterId = new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"),
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8525),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7651),
                             Description = "Explains the classification of triangles based on sides (equilateral, isosceles, scalene) and angles (acute, obtuse, right). It also introduces the properties of triangles and the Triangle Inequality Theorem.",
                             Name = "Triangles",
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8525)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7652)
                         },
                         new
                         {
                             Id = new Guid("37f7aef3-f5ec-4f95-bc88-ab929877b3d5"),
                             Active = true,
                             ChapterId = new Guid("32c1e4f7-36fc-44b8-9476-b2ac48f4504a"),
-                            CreatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8528),
+                            CreatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7658),
                             Description = "Explains the properties of circles, including radius, diameter, chord, tangent, secant, arc, and sector. Covers important theorems related to angles in circles, such as the Inscribed Angle Theorem and Tangent-Secant Theorem.",
                             Name = "Circles",
-                            UpdatedAt = new DateTime(2024, 10, 21, 9, 13, 56, 540, DateTimeKind.Local).AddTicks(8529)
+                            UpdatedAt = new DateTime(2024, 10, 21, 14, 14, 19, 562, DateTimeKind.Local).AddTicks(7659)
                         });
                 });
 
@@ -702,7 +714,6 @@ namespace Mindmath.Repository.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("RefreshToken")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("RefreshTokenExpiryTime")
@@ -712,6 +723,28 @@ namespace Mindmath.Repository.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasDiscriminator().HasValue("User");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "a4a224cf-972f-4a97-bf9f-393896af2a0b",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "73e04ed2-a1c6-4cf1-9c18-f7b55adffa18",
+                            Email = "admin@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PasswordHash = "AQAAAAIAAYagAAAAEM+G0JRkjmMQNjbi31KsuRCv9MeGvjJqCY6GIwboB18EcSOMiX+QpCuYMBbf7tQxCw==",
+                            PhoneNumber = "0908918318",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "ae2f6dcc-e305-40eb-a08b-38d8e980670d",
+                            TwoFactorEnabled = false,
+                            UserName = "admin",
+                            Active = false,
+                            CreateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Fullname = "Nguyen Le Tan Nghiep",
+                            RefreshTokenExpiryTime = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            UpdateAt = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
