@@ -17,7 +17,13 @@ namespace Mindmath.Repository.Repository
 
 		public async Task<PagedList<Chapter>> GetActiveChapters(Guid subjectId, ChapterParameters chapterParameters, bool trackChange)
 		{
-			var chapters = FindByCondition(c => c.SubjectId.Equals(subjectId) && c.Active, trackChange).OrderBy(c => c.Name);
+			var chapters = FindByCondition(c => c.SubjectId.Equals(subjectId) && c.Active, trackChange);
+			if (!string.IsNullOrEmpty(chapterParameters.SearchTerm))
+			{
+				var lowerCaseTerm = chapterParameters.SearchTerm.Trim().ToLower();
+				chapters = chapters.Where(c => c.Name.ToLower().Contains(lowerCaseTerm));
+			}
+			chapters = chapters.OrderBy(c => c.Name);
 			return PagedList<Chapter>.ToPagedList(chapters, chapterParameters.PageNumber, chapterParameters.PageSize);
 
 		}
@@ -27,7 +33,13 @@ namespace Mindmath.Repository.Repository
 
 		public async Task<PagedList<Chapter>> GetChapters(Guid subjectId, ChapterParameters chapterParameters, bool trackChange)
 		{
-			var chapters = FindByCondition(c => c.SubjectId.Equals(subjectId), trackChange).OrderBy(c => c.Name);
+			var chapters = FindByCondition(c => c.SubjectId.Equals(subjectId), trackChange);
+			if (!string.IsNullOrEmpty(chapterParameters.SearchTerm))
+			{
+				var lowerCaseTerm = chapterParameters.SearchTerm.Trim().ToLower();
+				chapters = chapters.Where(c => c.Name.ToLower().Contains(lowerCaseTerm));
+			}
+			chapters = chapters.OrderBy(c => c.Name);
 			return PagedList<Chapter>.ToPagedList(chapters, chapterParameters.PageNumber, chapterParameters.PageSize);
 		}
 	}

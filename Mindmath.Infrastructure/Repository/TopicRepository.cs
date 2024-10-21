@@ -19,6 +19,12 @@ namespace Mindmath.Infrastructure.Repository
 		public async Task<PagedList<Topic>> GetActiveTopics(Guid chapterId, TopicParameters topicParameters, bool trackChange)
 		{
 			var topics = FindByCondition(x => x.ChapterId == chapterId && x.Active, trackChange);
+			if (!string.IsNullOrEmpty(topicParameters.SearchTerm))
+			{
+				var lowerCaseTerm = topicParameters.SearchTerm.Trim().ToLower();
+				topics = topics.Where(c => c.Name.ToLower().Contains(lowerCaseTerm));
+			}
+			topics = topics.OrderBy(c => c.Name);
 			return PagedList<Topic>.ToPagedList(topics, topicParameters.PageNumber, topicParameters.PageSize);
 		}
 
@@ -29,6 +35,12 @@ namespace Mindmath.Infrastructure.Repository
 		public async Task<PagedList<Topic>> GetTopics(Guid chapterId, TopicParameters topicParameters, bool trackChange)
 		{
 			var topics = FindByCondition(x => x.ChapterId == chapterId, trackChange);
+			if (!string.IsNullOrEmpty(topicParameters.SearchTerm))
+			{
+				var lowerCaseTerm = topicParameters.SearchTerm.Trim().ToLower();
+				topics = topics.Where(c => c.Name.ToLower().Contains(lowerCaseTerm));
+			}
+			topics = topics.OrderBy(c => c.Name);
 			return PagedList<Topic>.ToPagedList(topics, topicParameters.PageNumber, topicParameters.PageSize);
 		}
 	}

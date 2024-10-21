@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mindmath.Repository.Constant;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.InputParameters.DTO;
 using Mindmath.Service.IService;
+using System.Text.Json;
 
 namespace Mindmath.API.Controllers
 {
@@ -36,18 +38,20 @@ namespace Mindmath.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = Roles.Admin)]
-		public async Task<IActionResult> GetInputParameters([FromRoute] string userId, [FromRoute] Guid problemTypeId)
+		public async Task<IActionResult> GetInputParameters([FromRoute] string userId, [FromRoute] Guid problemTypeId, [FromQuery] InputParameterParameters inputParameterParameters)
 		{
-			var inputParametersDto = await serviceManager.InputParameterService.GetInputParameters(problemTypeId, userId, trackChange: false);
-			return Ok(inputParametersDto);
+			var inputParametersDto = await serviceManager.InputParameterService.GetInputParameters(problemTypeId, userId, inputParameterParameters, trackChange: false);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(inputParametersDto.metaData));
+			return Ok(inputParametersDto.inputParameters);
 		}
 
 		[HttpGet("active")]
 		[Authorize(Roles = Roles.Teacher)]
-		public async Task<IActionResult> GetActiveInputParameters([FromRoute] string userId, [FromRoute] Guid problemTypeId)
+		public async Task<IActionResult> GetActiveInputParameters([FromRoute] string userId, [FromRoute] Guid problemTypeId, [FromQuery] InputParameterParameters inputParameterParameters)
 		{
-			var inputParametersDto = await serviceManager.InputParameterService.GetActiveInputParameters(problemTypeId, userId, trackChange: false);
-			return Ok(inputParametersDto);
+			var inputParametersDto = await serviceManager.InputParameterService.GetActiveInputParameters(problemTypeId, userId, inputParameterParameters, trackChange: false);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(inputParametersDto.metaData));
+			return Ok(inputParametersDto.inputParameters);
 		}
 
 		[HttpPut("{inputParameterId:guid}")]

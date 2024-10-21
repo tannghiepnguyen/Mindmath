@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Mindmath.Repository.Exceptions;
 using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.Transactions.DTO;
 
 namespace Mindmath.Service.Transactions
@@ -33,16 +35,18 @@ namespace Mindmath.Service.Transactions
             if (user == null) throw new UserNotFoundException(userId);
         }
 
-        public async Task<IEnumerable<TransactionReturnDto>> GetTransactions(bool trackChange)
+        public async Task<(IEnumerable<TransactionReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, bool trackChange)
         {
-            var transactions = await repositoryManager.Transactions.GetTransactions(trackChange);
-            return mapper.Map<IEnumerable<TransactionReturnDto>>(transactions);
+            var transactionsMetaData = await repositoryManager.Transactions.GetTransactions(transactionParameters, trackChange);
+            var transactions = mapper.Map<IEnumerable<TransactionReturnDto>>(transactionsMetaData);
+            return (transactions, transactionsMetaData.MetaData);
         }
 
-        public async Task<IEnumerable<TransactionReturnDto>> GetTransactionsByUserId(string userId, bool trackChange)
+        public async Task<(IEnumerable<TransactionReturnDto> transactions, MetaData metaData)> GetTransactionsByUserId(string userId, TransactionParameters transactionParameters, bool trackChange)
         {
-            var transactions = await repositoryManager.Transactions.GetTransactionsByUserId(userId, trackChange);
-            return mapper.Map<IEnumerable<TransactionReturnDto>>(transactions);
+            var transactionsMetaData = await repositoryManager.Transactions.GetTransactionsByUserId(userId, transactionParameters, trackChange);
+            var transactions = mapper.Map<IEnumerable<TransactionReturnDto>>(transactionsMetaData);
+            return (transactions, transactionsMetaData.MetaData);
         }
 
         public async Task<string> CreatePaymentAsync(Guid userId, TransactionReturnDto transactionDto)

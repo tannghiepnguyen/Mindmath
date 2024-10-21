@@ -15,7 +15,13 @@ namespace Mindmath.Infrastructure.Repository
 
 		public async Task<PagedList<Subject>> GetActiveSubjects(SubjectParameters subjectParameters, bool trackChange)
 		{
-			var subjects = FindByCondition(s => s.Active, trackChange).OrderBy(c => c.Name);
+			var subjects = FindByCondition(s => s.Active, trackChange);
+			if (!string.IsNullOrEmpty(subjectParameters.SearchTerm))
+			{
+				var lowerCaseTerm = subjectParameters.SearchTerm.Trim().ToLower();
+				subjects = subjects.Where(c => c.Name.ToLower().Contains(lowerCaseTerm));
+			}
+			subjects = subjects.OrderBy(c => c.Name);
 			return PagedList<Subject>.ToPagedList(subjects, subjectParameters.PageNumber, subjectParameters.PageSize);
 		}
 
@@ -23,7 +29,13 @@ namespace Mindmath.Infrastructure.Repository
 
 		public async Task<PagedList<Subject>> GetSubjects(SubjectParameters subjectParameters, bool trackChange)
 		{
-			var subjects = FindAll(trackChange).OrderBy(c => c.Name);
+			var subjects = FindAll(trackChange);
+			if (!string.IsNullOrEmpty(subjectParameters.SearchTerm))
+			{
+				var lowerCaseTerm = subjectParameters.SearchTerm.Trim().ToLower();
+				subjects = subjects.Where(c => c.Name.ToLower().Contains(lowerCaseTerm));
+			}
+			subjects = subjects.OrderBy(c => c.Name);
 			return PagedList<Subject>.ToPagedList(subjects, subjectParameters.PageNumber, subjectParameters.PageSize);
 		}
 

@@ -18,7 +18,13 @@ namespace Mindmath.Infrastructure.Repository
 
 		public async Task<PagedList<ProblemType>> GetActiveProblemTypes(Guid topicId, ProblemTypeParameters problemTypeParameters, bool trackChange)
 		{
-			var problemTypes = FindByCondition(x => x.TopicId == topicId && x.Active, trackChange).OrderBy(c => c.Name);
+			var problemTypes = FindByCondition(x => x.TopicId == topicId && x.Active, trackChange);
+			if (!string.IsNullOrEmpty(problemTypeParameters.SearchTerm))
+			{
+				var lowerCaseTerm = problemTypeParameters.SearchTerm.Trim().ToLower();
+				problemTypes = problemTypes.Where(c => c.Name.ToLower().Contains(lowerCaseTerm));
+			}
+			problemTypes = problemTypes.OrderBy(c => c.Name);
 			return PagedList<ProblemType>.ToPagedList(problemTypes, problemTypeParameters.PageNumber, problemTypeParameters.PageSize);
 		}
 
@@ -29,7 +35,13 @@ namespace Mindmath.Infrastructure.Repository
 
 		public async Task<PagedList<ProblemType>> GetProblemTypes(Guid topicId, ProblemTypeParameters problemTypeParameters, bool trackChange)
 		{
-			var problemTypes = FindByCondition(x => x.TopicId == topicId, trackChange).OrderBy(c => c.Name);
+			var problemTypes = FindByCondition(x => x.TopicId == topicId, trackChange);
+			if (!string.IsNullOrEmpty(problemTypeParameters.SearchTerm))
+			{
+				var lowerCaseTerm = problemTypeParameters.SearchTerm.Trim().ToLower();
+				problemTypes = problemTypes.Where(c => c.Name.ToLower().Contains(lowerCaseTerm));
+			}
+			problemTypes = problemTypes.OrderBy(c => c.Name);
 			return PagedList<ProblemType>.ToPagedList(problemTypes, problemTypeParameters.PageNumber, problemTypeParameters.PageSize);
 		}
 	}

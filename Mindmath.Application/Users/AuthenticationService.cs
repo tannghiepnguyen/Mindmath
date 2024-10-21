@@ -166,9 +166,7 @@ namespace Mindmath.Application.Users
 		{
 			user = await userManager.FindByNameAsync(userForAuthentication.UserName);
 
-			var result = (user != null && await userManager.CheckPasswordAsync(user, userForAuthentication.Password));
-
-			return result;
+			return (user != null && await userManager.CheckPasswordAsync(user, userForAuthentication.Password) && user.Active);
 		}
 
 		public async Task<IdentityResult> UpdateUser(string userId, UserForUpdateDto userForUpdateDto)

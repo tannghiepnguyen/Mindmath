@@ -4,6 +4,8 @@ using Microsoft.Extensions.Configuration;
 using Mindmath.Repository.Exceptions;
 using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.InputParameters.DTO;
 using StackExchange.Redis;
 
@@ -96,22 +98,24 @@ namespace Mindmath.Service.InputParameters
 			return mapper.Map<InputParameterReturnDto>(inputParameterEntity);
 		}
 
-		public async Task<IEnumerable<InputParameterReturnDto>> GetInputParameters(Guid problemTypeId, string userId, bool trackChange)
+		public async Task<(IEnumerable<InputParameterReturnDto> inputParameters, MetaData metaData)> GetInputParameters(Guid problemTypeId, string userId, InputParameterParameters inputParameterParameters, bool trackChange)
 		{
 			await CheckUserExist(userId);
 			await CheckProblemTypeExist(problemTypeId, trackChange);
 
-			var inputParameters = await repositoryManager.InputParameters.GetInputParameters(userId, problemTypeId, trackChange);
-			return mapper.Map<IEnumerable<InputParameterReturnDto>>(inputParameters);
+			var inputParametersMetaData = await repositoryManager.InputParameters.GetInputParameters(userId, problemTypeId, inputParameterParameters, trackChange);
+			var inputParameters = mapper.Map<IEnumerable<InputParameterReturnDto>>(inputParametersMetaData);
+			return (inputParameters, inputParametersMetaData.MetaData);
 		}
 
-		public async Task<IEnumerable<InputParameterReturnDto>> GetActiveInputParameters(Guid problemTypeId, string userId, bool trackChange)
+		public async Task<(IEnumerable<InputParameterReturnDto> inputParameters, MetaData metaData)> GetActiveInputParameters(Guid problemTypeId, string userId, InputParameterParameters inputParameterParameters, bool trackChange)
 		{
 			await CheckUserExist(userId);
 			await CheckProblemTypeExist(problemTypeId, trackChange);
 
-			var inputParameters = await repositoryManager.InputParameters.GetActiveInputParameters(userId, problemTypeId, trackChange);
-			return mapper.Map<IEnumerable<InputParameterReturnDto>>(inputParameters);
+			var inputParametersMetaData = await repositoryManager.InputParameters.GetActiveInputParameters(userId, problemTypeId, inputParameterParameters, trackChange);
+			var inputParameters = mapper.Map<IEnumerable<InputParameterReturnDto>>(inputParametersMetaData);
+			return (inputParameters, inputParametersMetaData.MetaData);
 		}
 	}
 }

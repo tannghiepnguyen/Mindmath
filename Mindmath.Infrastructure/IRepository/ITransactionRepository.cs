@@ -1,13 +1,15 @@
 ﻿using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 
 namespace Mindmath.Repository.IRepository
 {
 	public interface ITransactionRepository
 	{
 		void CreateTransaction(Transaction transaction);
-		Task<IEnumerable<Transaction>> GetTransactions(bool trackChange);
-		Task<IEnumerable<Transaction>> GetTransactionsByUserId(string userId, bool trackChange);
         Task<Transaction> AddTransactionAsync(Transaction transaction);
         Task<Transaction?> GetTransactionByIdAsync(Guid id);
-    }
+		Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange);
+		Task<PagedList<Transaction>> GetTransactionsByUserId(string userId, TransactionParameters transactionParameters, bool trackChange);
+	}
 }
