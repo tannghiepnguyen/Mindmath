@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Mindmath.Repository.Constant;
 using Mindmath.Repository.Parameters;
 using Mindmath.Service.IService;
-using Mindmath.Service.Transactions;
 using Mindmath.Service.Transactions.DTO;
 using System.Text.Json;
 
@@ -38,17 +37,17 @@ namespace Mindmath.API.Controllers
 			return Ok(transactions.transactions);
 		}
 
-        [HttpPost("create")]
-        public async Task<IActionResult> CreatePayment(string userId, [FromBody] TransactionReturnDto transactionDto)
-        {
-            var paymentUrl = await serviceManager.TransactionService.CreatePaymentAsync(Guid.Parse(userId), transactionDto);
-            return Ok(new { PaymentUrl = paymentUrl });
-        }
+		[HttpPost("create")]
+		public async Task<IActionResult> CreatePayment(string userId, [FromBody] TransactionForCreationDto transactionDto)
+		{
+			var paymentUrl = await serviceManager.TransactionService.CreatePaymentAsync(Guid.Parse(userId), transactionDto);
+			return Ok(new { PaymentUrl = paymentUrl });
+		}
 
-        [HttpGet("IPN")]
-        public async Task<IActionResult> IPN()
-        {
-            return await serviceManager.TransactionService.IPNAsync(Request.Query);
-        }
-    }
+		[HttpGet("IPN")]
+		public async Task<IActionResult> IPN()
+		{
+			return await serviceManager.TransactionService.IPNAsync(Request.Query);
+		}
+	}
 }

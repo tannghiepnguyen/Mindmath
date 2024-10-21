@@ -8,6 +8,7 @@ namespace Mindmath.Service.Transactions.DTO
 		public TransactionProfile()
 		{
 			CreateMap<Transaction, TransactionReturnDto>();
+			CreateMap<TransactionForCreationDto, Transaction>();
 		}
 	}
 }

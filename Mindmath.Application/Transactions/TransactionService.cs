@@ -49,18 +49,13 @@ namespace Mindmath.Service.Transactions
 			return (transactions, transactionsMetaData.MetaData);
 		}
 
-		public async Task<string> CreatePaymentAsync(Guid userId, TransactionReturnDto transactionDto)
+		public async Task<string> CreatePaymentAsync(Guid userId, TransactionForCreationDto transactionDto)
 		{
-			var transaction = new Transaction
-			{
-				Id = Guid.NewGuid(),
-				Amount = transactionDto.Amount,
-				Description = transactionDto.Description,
-				CreatedAt = DateTime.Now,
-				Type = "Deposit",
-				Status = "Pending ",
-				UserId = userId.ToString()
-			};
+			var transaction = mapper.Map<Transaction>(transactionDto);
+			transaction.Id = Guid.NewGuid();
+			transaction.CreatedAt = DateTime.Now;
+			transaction.Type = "Deposit";
+			transaction.Status = "Pending";
 
 			await repositoryManager.Transactions.AddTransactionAsync(transaction);
 
