@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 using Mindmath.Repository.Persistence;
 
 namespace Mindmath.Repository.Repository
@@ -13,8 +15,16 @@ namespace Mindmath.Repository.Repository
 
 		public void CreateTransaction(Transaction transaction) => Create(transaction);
 
-		public async Task<IEnumerable<Transaction>> GetTransactions(bool trackChange) => await FindAll(trackChange).Include(c => c.User).AsSplitQuery().ToListAsync();
+		public async Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange)
+		{
+			var transactions = FindAll(trackChange).Include(c => c.User);
+			return PagedList<Transaction>.ToPagedList(transactions, transactionParameters.PageNumber, transactionParameters.PageSize);
+		}
 
-		public async Task<IEnumerable<Transaction>> GetTransactionsByUserId(string userId, bool trackChange) => await FindByCondition(x => x.UserId == userId, trackChange).Include(c => c.User).AsSplitQuery().ToListAsync();
+		public async Task<PagedList<Transaction>> GetTransactionsByUserId(string userId, TransactionParameters transactionParameters, bool trackChange)
+		{
+			var transactions = FindByCondition(x => x.UserId == userId, trackChange).Include(c => c.User);
+			return PagedList<Transaction>.ToPagedList(transactions, transactionParameters.PageNumber, transactionParameters.PageSize);
+		}
 	}
 }

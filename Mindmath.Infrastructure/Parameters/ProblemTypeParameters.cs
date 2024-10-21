@@ -2,5 +2,6 @@
 {
 	public class ProblemTypeParameters : RequestParameters
 	{
+		public string? SearchTerm { get; set; }
 	}
 }
