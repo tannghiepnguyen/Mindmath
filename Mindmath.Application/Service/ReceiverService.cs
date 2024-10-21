@@ -43,6 +43,7 @@ namespace Mindmath.Service.Service
 					Amount = 10000,
 					Description = $"Transaction for generating for input parameter {inputParameterId}",
 					CreatedAt = DateTime.Now,
+					Type = "Pay",
 					Status = "Success",
 					UserId = userId
 				};

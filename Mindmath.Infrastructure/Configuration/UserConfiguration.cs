@@ -16,6 +16,7 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.Property(u => u.RefreshTokenExpiryTime).IsRequired();
 			builder.HasOne(u => u.Wallet).WithOne(u => u.User).OnDelete(DeleteBehavior.Restrict);
 			builder.HasMany(u => u.InputParameters).WithOne(u => u.User).OnDelete(DeleteBehavior.Restrict);
+			builder.HasMany(u => u.Transactions).WithOne(u => u.User).OnDelete(DeleteBehavior.Restrict);
 		}
 	}
 }
