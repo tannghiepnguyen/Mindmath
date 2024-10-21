@@ -3,6 +3,7 @@ using Microsoft.OpenApi.Models;
 using Mindmath.API;
 using Mindmath.API.Extension;
 using Mindmath.Service.Extension;
+using Mindmath.Service.Transactions;
 using NLog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +19,8 @@ builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.ConfigureRepositorymanager();
 builder.Services.AddApplicationServices();
 builder.Services.ConfigureIdentity();
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<Utils>();
 builder.Services.AddAuthentication();
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.ConfigureReceiverService();

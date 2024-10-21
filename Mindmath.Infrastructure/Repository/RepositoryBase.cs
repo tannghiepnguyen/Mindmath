@@ -12,8 +12,18 @@ namespace Mindmath.Repository.Repository
 			_context = context;
 		}
 		public void Create(T entity) => _context.Set<T>().Add(entity);
+        public async Task<T> CreateAsync(T entity)
+        {
+            _context.Set<T>().Add(entity);
+            await _context.SaveChangesAsync();
+            return entity;
+        }
+        public async Task<T?> FindByIdAsync(Expression<Func<T, bool>> expression)
+        {
+            return await _context.Set<T>().FirstOrDefaultAsync(expression);
+        }
 
-		public void Delete(T entity) => _context.Set<T>().Remove(entity);
+        public void Delete(T entity) => _context.Set<T>().Remove(entity);
 
 		public IQueryable<T> FindAll(bool trackChanges) =>
 			!trackChanges ?

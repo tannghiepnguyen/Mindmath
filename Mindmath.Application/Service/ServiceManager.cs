@@ -28,16 +28,16 @@ namespace Mindmath.Service.Service
 		private readonly Lazy<ITransactionService> transactionService;
 		private readonly Lazy<ISolutionService> solutionService;
 		private readonly Lazy<IWalletService> walletService;
-		public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
-		{
-			authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper, configuration, roleManager, repositoryManager));
+        public ServiceManager(IRepositoryManager repositoryManager, IMapper mapper, IConfiguration configuration, UserManager<User> userManager, RoleManager<IdentityRole> roleManager, Utils utils)
+        {
+            authenticationService = new Lazy<IAuthenticationService>(() => new AuthenticationService(userManager, mapper, configuration, roleManager, repositoryManager));
 			subjectService = new Lazy<ISubjectService>(() => new SubjectService(repositoryManager, mapper));
 			chapterService = new Lazy<IChapterService>(() => new ChapterService(repositoryManager, mapper));
 			topicService = new Lazy<ITopicService>(() => new TopicService(repositoryManager, mapper));
 			problemTypeService = new Lazy<IProblemTypeService>(() => new ProblemTypeService(repositoryManager, mapper));
 			inputParameterService = new Lazy<IInputParameterService>(() => new InputParameterService(repositoryManager, mapper, userManager, configuration));
-			transactionService = new Lazy<ITransactionService>(() => new TransactionService(repositoryManager, mapper, userManager));
-			solutionService = new Lazy<ISolutionService>(() => new SolutionService(repositoryManager, mapper));
+            transactionService = new Lazy<ITransactionService>(() => new TransactionService(repositoryManager, mapper, userManager, configuration, utils));
+            solutionService = new Lazy<ISolutionService>(() => new SolutionService(repositoryManager, mapper));
 			walletService = new Lazy<IWalletService>(() => new WalletService(repositoryManager, mapper));
 		}
 		public IAuthenticationService AuthenticationService => authenticationService.Value;

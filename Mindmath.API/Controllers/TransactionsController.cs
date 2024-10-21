@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Mindmath.Repository.Constant;
 using Mindmath.Service.IService;
+using Mindmath.Service.Transactions;
+using Mindmath.Service.Transactions.DTO;
 
 namespace Mindmath.API.Controllers
 {
@@ -31,5 +33,18 @@ namespace Mindmath.API.Controllers
 			var transactions = await serviceManager.TransactionService.GetTransactionsByUserId(userId, false);
 			return Ok(transactions);
 		}
-	}
+
+        [HttpPost("create")]
+        public async Task<IActionResult> CreatePayment(string userId, [FromBody] TransactionReturnDto transactionDto)
+        {
+            var paymentUrl = await serviceManager.TransactionService.CreatePaymentAsync(Guid.Parse(userId), transactionDto);
+            return Ok(new { PaymentUrl = paymentUrl });
+        }
+
+        [HttpGet("IPN")]
+        public async Task<IActionResult> IPN()
+        {
+            return await serviceManager.TransactionService.IPNAsync(Request.Query);
+        }
+    }
 }

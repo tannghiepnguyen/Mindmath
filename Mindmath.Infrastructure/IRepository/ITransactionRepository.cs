@@ -7,5 +7,7 @@ namespace Mindmath.Repository.IRepository
 		void CreateTransaction(Transaction transaction);
 		Task<IEnumerable<Transaction>> GetTransactions(bool trackChange);
 		Task<IEnumerable<Transaction>> GetTransactionsByUserId(string userId, bool trackChange);
-	}
+        Task<Transaction> AddTransactionAsync(Transaction transaction);
+        Task<Transaction?> GetTransactionByIdAsync(Guid id);
+    }
 }
