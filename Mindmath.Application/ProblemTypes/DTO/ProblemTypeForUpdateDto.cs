@@ -9,8 +9,6 @@ namespace Mindmath.Service.ProblemTypes.DTO
 		[Required]
 		public string Description { get; init; }
 		[Required]
-		public bool Active { get; init; }
-		[Required]
 		public int NumberOfInputs { get; init; }
 	}
 }

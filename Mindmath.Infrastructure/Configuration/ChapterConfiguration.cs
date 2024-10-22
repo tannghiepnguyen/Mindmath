@@ -11,8 +11,9 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Name).IsRequired();
 			builder.Property(x => x.Description).IsRequired();
-			builder.Property(x => x.CreatedAt).IsRequired();
-			builder.Property(x => x.UpdatedAt).IsRequired();
+			builder.Property(x => x.CreatedAt);
+			builder.Property(x => x.UpdatedAt);
+			builder.Property(x => x.DeletedAt);
 			builder.Property(x => x.Active).IsRequired();
 			builder.HasOne(x => x.Subject).WithMany(x => x.Chapters).HasForeignKey(x => x.SubjectId).OnDelete(DeleteBehavior.Restrict);
 
@@ -23,7 +24,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Trigonometry",
 					Description = "This chapter deals with trigonometry and its applications in solving problems related to triangles and other geometric shapes.",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					Active = true,
 					SubjectId = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd")
 				},
@@ -33,7 +33,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Calculus",
 					Description = "This chapter deals with calculus and its applications in solving problems related to rates of change and accumulation.",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					Active = true,
 					SubjectId = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd")
 				},
@@ -43,7 +42,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Algebra",
 					Description = "This chapter deals with algebra and its applications in solving problems related to equations and inequalities.",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					Active = true,
 					SubjectId = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd")
 				},
@@ -53,7 +51,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Geometry",
 					Description = "This chapter is a branch of mathematics that deals with the properties, relationships, and measurements of points, lines, shapes, and spaces. It is one of the oldest fields of mathematics and has wide applications in various fields, from art and architecture to engineering and physics",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					Active = true,
 					SubjectId = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd")
 				}

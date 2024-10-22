@@ -7,8 +7,9 @@ namespace Mindmath.Repository.Models
 		[Key]
 		public Guid Id { get; set; }
 		public string Input { get; set; }
-		public DateTime CreatedAt { get; set; }
-		public DateTime UpdateAt { get; set; }
+		public DateTime? CreatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
+		public DateTime? DeletedAt { get; set; }
 		public bool Active { get; set; }
 		public Guid? ProblemTypeId { get; set; }
 		public ProblemType ProblemType { get; set; }

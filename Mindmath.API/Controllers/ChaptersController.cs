@@ -60,5 +60,13 @@ namespace Mindmath.API.Controllers
 			await serviceManager.ChapterService.UpdateChapter(subjectId, chapterId, chapterForUpdate, chapterTrackChange: true, subjectTrackChange: false);
 			return NoContent();
 		}
+
+		[HttpDelete("{chapterId:guid}")]
+		[Authorize(Roles = Roles.Admin)]
+		public async Task<IActionResult> Delete([FromRoute] Guid chapterId, [FromRoute] Guid subjectId)
+		{
+			await serviceManager.ChapterService.DeleteChapter(subjectId, chapterId, chapterTrackChange: true, subjectTrackChange: false);
+			return NoContent();
+		}
 	}
 }

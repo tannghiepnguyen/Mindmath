@@ -140,8 +140,7 @@ namespace Mindmath.Application.Users
 		public async Task<IdentityResult> RegisterUser(UserForRegistrationDTO userForRegistration)
 		{
 			var user = mapper.Map<User>(userForRegistration);
-			user.CreateAt = DateTime.Now;
-			user.UpdateAt = DateTime.Now;
+			user.CreatedAt = DateTime.Now;
 			user.Active = true;
 
 			var result = await userManager.CreateAsync(user, userForRegistration.Password);
@@ -177,6 +176,7 @@ namespace Mindmath.Application.Users
 			if (user is null) throw new UserNotFoundException(userId);
 
 			mapper.Map(userForUpdateDto, user);
+			user.UpdatedAt = DateTime.Now;
 
 			return await userManager.UpdateAsync(user);
 		}
@@ -223,6 +223,18 @@ namespace Mindmath.Application.Users
 			this.user = user;
 
 			return await CreateToken(false);
+		}
+
+		public async Task<IdentityResult> DeleteUser(string userId)
+		{
+			var user = await userManager.FindByIdAsync(userId);
+
+			if (user is null) throw new UserNotFoundException(userId);
+
+			user.Active = false;
+			user.DeletedAt = DateTime.Now;
+
+			return await userManager.UpdateAsync(user);
 		}
 	}
 }

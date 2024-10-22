@@ -54,7 +54,6 @@ namespace Mindmath.Service.InputParameters
 			var inputParameterEntity = mapper.Map<InputParameter>(inputParameter);
 			inputParameterEntity.Id = Guid.NewGuid();
 			inputParameterEntity.CreatedAt = DateTime.Now;
-			inputParameterEntity.UpdateAt = DateTime.Now;
 			inputParameterEntity.Active = true;
 			inputParameterEntity.ProblemTypeId = problemTypeId;
 			inputParameterEntity.UserId = userId;
@@ -71,20 +70,6 @@ namespace Mindmath.Service.InputParameters
 			repositoryManager.InputParameters.CreateInputParameter(inputParameterEntity);
 			await repositoryManager.Save();
 			return mapper.Map<InputParameterReturnDto>(inputParameterEntity);
-		}
-
-		public async Task UpdateInputParameter(Guid problemTypeId, string userId, Guid inputParameterId, InputParameterForUpdateDto inputParameter, bool inputParameterTrackChange, bool problemTypeTrackChange)
-		{
-			await CheckUserExist(userId);
-			await CheckProblemTypeExist(problemTypeId, problemTypeTrackChange);
-
-			var inputParameterEntity = await repositoryManager.InputParameters.GetInputParameter(userId, problemTypeId, inputParameterId, inputParameterTrackChange);
-			if (inputParameterEntity == null) throw new InputParameterNotFoundException(inputParameterId);
-
-			mapper.Map(inputParameter, inputParameterEntity);
-			inputParameterEntity.UpdateAt = DateTime.Now;
-
-			await repositoryManager.Save();
 		}
 
 		public async Task<InputParameterReturnDto?> GetInputParameter(Guid problemTypeId, string userId, Guid inputParameterId, bool trackChange)
@@ -116,6 +101,20 @@ namespace Mindmath.Service.InputParameters
 			var inputParametersMetaData = await repositoryManager.InputParameters.GetActiveInputParameters(userId, problemTypeId, inputParameterParameters, trackChange);
 			var inputParameters = mapper.Map<IEnumerable<InputParameterReturnDto>>(inputParametersMetaData);
 			return (inputParameters, inputParametersMetaData.MetaData);
+		}
+
+		public async Task DeleteInputParameter(Guid problemTypeId, string userId, Guid inputParameterId, bool inputParameterTrackChange, bool problemTypeTrackChange)
+		{
+			await CheckUserExist(userId);
+			await CheckProblemTypeExist(problemTypeId, problemTypeTrackChange);
+
+			var inputParameterEntity = await repositoryManager.InputParameters.GetInputParameter(userId, problemTypeId, inputParameterId, inputParameterTrackChange);
+			if (inputParameterEntity == null) throw new InputParameterNotFoundException(inputParameterId);
+
+			inputParameterEntity.Active = false;
+			inputParameterEntity.DeletedAt = DateTime.Now;
+
+			await repositoryManager.Save();
 		}
 	}
 }

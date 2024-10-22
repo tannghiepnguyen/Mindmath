@@ -11,8 +11,9 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.HasKey(x => x.Id);
 			builder.Property(x => x.Name).IsRequired();
 			builder.Property(x => x.Description).IsRequired();
-			builder.Property(x => x.CreatedAt).IsRequired();
-			builder.Property(x => x.UpdatedAt).IsRequired();
+			builder.Property(x => x.CreatedAt);
+			builder.Property(x => x.UpdatedAt);
+			builder.Property(x => x.DeletedAt);
 			builder.Property(x => x.Active).IsRequired();
 
 			builder.HasData(
@@ -22,7 +23,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Mathematics",
 					Description = "The study of numbers, quantities, structures, shapes, space, and change. It involves abstract concepts as well as practical problem-solving techniques that are essential in various fields such as science, engineering, economics, and more.",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					Active = true
 				}
 			);

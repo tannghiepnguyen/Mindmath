@@ -8,8 +8,9 @@ namespace Mindmath.Repository.Models
 		public Guid Id { get; set; }
 		public string Link { get; set; }
 		public string Description { get; set; }
-		public DateTime CreatedAt { get; set; }
-		public DateTime UpdatedAt { get; set; }
+		public DateTime? CreatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
+		public DateTime? DeletedAt { get; set; }
 		public bool Active { get; set; }
 		public Guid? InputParameterId { get; set; }
 		public InputParameter InputParameter { get; set; }

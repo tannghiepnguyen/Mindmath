@@ -54,11 +54,11 @@ namespace Mindmath.API.Controllers
 			return Ok(inputParametersDto.inputParameters);
 		}
 
-		[HttpPut("{inputParameterId:guid}")]
+		[HttpDelete("{inputParameterId:guid}")]
 		[Authorize(Roles = Roles.Teacher)]
-		public async Task<IActionResult> UpdateInputParameter([FromRoute] string userId, [FromRoute] Guid problemTypeId, [FromRoute] Guid inputParameterId, [FromBody] InputParameterForUpdateDto inputParameterForUpdateDto)
+		public async Task<IActionResult> UpdateInputParameter([FromRoute] string userId, [FromRoute] Guid problemTypeId, [FromRoute] Guid inputParameterId)
 		{
-			await serviceManager.InputParameterService.UpdateInputParameter(problemTypeId, userId, inputParameterId, inputParameterForUpdateDto, inputParameterTrackChange: true, problemTypeTrackChange: false);
+			await serviceManager.InputParameterService.DeleteInputParameter(problemTypeId, userId, inputParameterId, inputParameterTrackChange: true, problemTypeTrackChange: false);
 			return NoContent();
 		}
 	}

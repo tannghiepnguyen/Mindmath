@@ -13,6 +13,7 @@ namespace Mindmath.Service.Users
 		Task<TokenDto> CreateToken(bool populateExp);
 		Task<TokenDto> RefreshToken(TokenDto tokenDto);
 		Task<IdentityResult> UpdateUser(string userId, UserForUpdateDto userForUpdateDto);
+		Task<IdentityResult> DeleteUser(string userId);
 		Task<UserReturnDto> GetUserById(string userId);
 		Task<(IEnumerable<UserReturnDto> users, MetaData MetaData)> GetUsers(UserParameters userParameters);
 		Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto);

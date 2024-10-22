@@ -9,8 +9,9 @@ namespace Mindmath.Infrastructure.Configuration
 		public void Configure(EntityTypeBuilder<User> builder)
 		{
 			builder.Property(u => u.Fullname).HasMaxLength(100).IsRequired();
-			builder.Property(u => u.CreateAt).IsRequired();
-			builder.Property(u => u.UpdateAt).IsRequired();
+			builder.Property(u => u.CreatedAt);
+			builder.Property(u => u.UpdatedAt);
+			builder.Property(u => u.DeletedAt);
 			builder.Property(u => u.Active).IsRequired();
 			builder.Property(u => u.RefreshToken).IsRequired();
 			builder.Property(u => u.RefreshTokenExpiryTime).IsRequired();

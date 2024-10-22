@@ -11,5 +11,6 @@ namespace Mindmath.Service.Topics
 		Task<TopicReturnDto?> GetTopic(Guid chapterId, Guid id, bool trackChange);
 		Task<TopicReturnDto> CreateTopic(Guid chapterId, TopicForCreationDto topic, bool trackChange);
 		Task UpdateTopic(Guid chapterId, Guid id, TopicForUpdateDto topicForUpdate, bool chapterTrackChange, bool topicTrackChange);
+		Task DeleteTopic(Guid chapterId, Guid id, bool chapterTrackChange, bool topicTrackChange);
 	}
 }

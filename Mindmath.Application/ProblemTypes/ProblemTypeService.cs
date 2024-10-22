@@ -78,5 +78,17 @@ namespace Mindmath.Service.ProblemTypes
 			problemType.UpdatedAt = DateTime.Now;
 			await repositoryManager.Save();
 		}
+
+		public async Task DeleteProblemType(Guid topicId, Guid id, bool topicTrackChange, bool problemTypeTrackChange)
+		{
+			await CheckTopicExist(topicId, topicTrackChange);
+
+			var problemType = await repositoryManager.ProblemTypes.GetProblemType(topicId, id, problemTypeTrackChange);
+			if (problemType == null) throw new ProblemTypeNotFoundException(id);
+
+			problemType.Active = false;
+			problemType.DeletedAt = DateTime.Now;
+			await repositoryManager.Save();
+		}
 	}
 }

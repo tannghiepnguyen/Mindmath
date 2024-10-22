@@ -11,5 +11,6 @@ namespace Mindmath.Service.ProblemTypes
 		Task<ProblemTypeReturnDto?> GetProblemType(Guid topicId, Guid id, bool trackChange);
 		Task<ProblemTypeReturnDto> CreateProblemType(Guid topicId, ProblemTypeForCreationDto problemType, bool trackChange);
 		Task UpdateProblemType(Guid topicId, Guid id, ProblemTypeForUpdateDto problemTypeForUpdate, bool topicTrackChange, bool problemTypeTrackChange);
+		Task DeleteProblemType(Guid topicId, Guid id, bool topicTrackChange, bool problemTypeTrackChange);
 	}
 }

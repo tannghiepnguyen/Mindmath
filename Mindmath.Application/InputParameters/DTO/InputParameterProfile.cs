@@ -9,7 +9,6 @@ namespace Mindmath.Application.InputParameters.DTO
 		public InputParameterProfile()
 		{
 			CreateMap<InputParameterForCreationDto, InputParameter>();
-			CreateMap<InputParameterForUpdateDto, InputParameter>();
 			CreateMap<InputParameter, InputParameterReturnDto>();
 		}
 	}

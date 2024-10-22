@@ -78,5 +78,17 @@ namespace Mindmath.Service.Topics
 			topic.UpdatedAt = DateTime.Now;
 			await repositoryManager.Save();
 		}
+
+		public async Task DeleteTopic(Guid chapterId, Guid id, bool chapterTrackChange, bool topicTrackChange)
+		{
+			await CheckChapterExist(chapterId, chapterTrackChange);
+
+			var topic = await repositoryManager.Topics.GetTopic(chapterId, id, topicTrackChange);
+			if (topic == null) throw new TopicNotFoundException(id);
+
+			topic.Active = false;
+			topic.DeletedAt = DateTime.Now;
+			await repositoryManager.Save();
+		}
 	}
 }

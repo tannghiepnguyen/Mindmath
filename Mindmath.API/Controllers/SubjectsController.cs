@@ -61,5 +61,13 @@ namespace Mindmath.API.Controllers
 			await serviceManager.SubjectService.UpdateSubject(subjectId, subjectForUpdate, trackChange: true);
 			return NoContent();
 		}
+
+		[HttpDelete("{subjectId:guid}")]
+		[Authorize(Roles = Roles.Admin)]
+		public async Task<IActionResult> Delete(Guid subjectId)
+		{
+			await serviceManager.SubjectService.DeleteSubject(subjectId, true);
+			return NoContent();
+		}
 	}
 }

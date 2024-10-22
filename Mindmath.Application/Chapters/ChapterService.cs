@@ -81,5 +81,17 @@ namespace Mindmath.Service.Chapters
 			await repositoryManager.Save();
 
 		}
+
+		public async Task DeleteChapter(Guid subjectId, Guid id, bool chapterTrackChange, bool subjectTrackChange)
+		{
+			await CheckSubjectExist(subjectId, subjectTrackChange);
+
+			var chapterEntity = await repositoryManager.Chapters.GetChapter(subjectId, id, chapterTrackChange);
+			if (chapterEntity == null) throw new ChapterNotFoundException(id);
+
+			chapterEntity.Active = false;
+			chapterEntity.DeletedAt = DateTime.Now;
+			await repositoryManager.Save();
+		}
 	}
 }

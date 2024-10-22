@@ -11,5 +11,6 @@ namespace Mindmath.Service.Subjects
 		Task<SubjectReturnDto?> GetSubject(Guid id, bool trackChange);
 		Task<SubjectReturnDto> CreateSubject(SubjectForCreationDto subject);
 		Task UpdateSubject(Guid id, SubjectForUpdateDto subjectForUpdate, bool trackChange);
+		Task DeleteSubject(Guid id, bool trackChange);
 	}
 }

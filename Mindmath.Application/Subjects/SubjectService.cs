@@ -30,6 +30,15 @@ namespace Mindmath.Service.Subjects
 			return mapper.Map<SubjectReturnDto>(subjectEntity);
 		}
 
+		public async Task DeleteSubject(Guid id, bool trackChange)
+		{
+			var subjectEntity = await repositoryManager.Subjects.GetSubject(id, trackChange);
+			if (subjectEntity is null) throw new SubjectNotFoundException(id);
+			subjectEntity.Active = false;
+			subjectEntity.DeletedAt = DateTime.Now;
+			await repositoryManager.Save();
+		}
+
 		public async Task<(IEnumerable<SubjectReturnDto> subjects, MetaData metaData)> GetActiveSubjects(SubjectParameters subjectParameters, bool trackChange)
 		{
 			var activeSubjectsWithMetaData = await repositoryManager.Subjects.GetActiveSubjects(subjectParameters, trackChange);

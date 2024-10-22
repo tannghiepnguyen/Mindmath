@@ -11,8 +11,9 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.HasKey(e => e.Id);
 			builder.Property(e => e.Name).IsRequired();
 			builder.Property(e => e.Description).IsRequired();
-			builder.Property(e => e.CreatedAt).IsRequired();
-			builder.Property(e => e.UpdatedAt).IsRequired();
+			builder.Property(e => e.CreatedAt);
+			builder.Property(e => e.UpdatedAt);
+			builder.Property(e => e.DeletedAt);
 			builder.Property(e => e.NumberOfInputs).IsRequired();
 			builder.Property(e => e.Active).IsRequired();
 			builder.HasOne(e => e.Topic).WithMany(e => e.ProblemTypes).HasForeignKey(e => e.TopicId).OnDelete(DeleteBehavior.Restrict);
@@ -25,7 +26,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Circumference of a Circle",
 					Description = "Use the formula to find the circumference.",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					NumberOfInputs = 1,
 					Active = true,
 					TopicId = Guid.Parse("37f7aef3-f5ec-4f95-bc88-ab929877b3d5")
@@ -36,7 +36,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Area of a Circle",
 					Description = "Use the formula to find the area.",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					NumberOfInputs = 1,
 					Active = true,
 					TopicId = Guid.Parse("37f7aef3-f5ec-4f95-bc88-ab929877b3d5")
@@ -47,7 +46,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Perimeter of a triangle",
 					Description = "Use the formula to find the perimeter.",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					NumberOfInputs = 3,
 					Active = true,
 					TopicId = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd")
@@ -58,7 +56,6 @@ namespace Mindmath.Infrastructure.Configuration
 					Name = "Area of a triangle",
 					Description = "Use the formula to find the area.",
 					CreatedAt = DateTime.Now,
-					UpdatedAt = DateTime.Now,
 					NumberOfInputs = 2,
 					Active = true,
 					TopicId = Guid.Parse("f5a42f20-64ef-43b6-aeef-a4686a3b19dd")

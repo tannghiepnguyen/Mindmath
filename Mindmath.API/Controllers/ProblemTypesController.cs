@@ -62,6 +62,12 @@ namespace Mindmath.API.Controllers
 			return NoContent();
 		}
 
-
+		[HttpDelete("{problemTypeId:guid}")]
+		[Authorize(Roles = Roles.Admin)]
+		public async Task<IActionResult> DeleteProblemType(Guid topicId, Guid problemTypeId)
+		{
+			await serviceManager.ProblemTypeService.DeleteProblemType(topicId, problemTypeId, topicTrackChange: false, problemTypeTrackChange: true);
+			return NoContent();
+		}
 	}
 }

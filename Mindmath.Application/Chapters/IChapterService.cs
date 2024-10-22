@@ -11,5 +11,6 @@ namespace Mindmath.Service.Chapters
 		Task<ChapterReturnDto?> GetChapter(Guid subjectId, Guid id, bool trackChange);
 		Task<ChapterReturnDto> CreateChapter(Guid subjectId, ChapterForCreationDto chapter, bool trackChange);
 		Task UpdateChapter(Guid subjectId, Guid id, ChapterForUpdateDto chapterForUpdate, bool chapterTrackChange, bool subjectTrackChange);
+		Task DeleteChapter(Guid subjectId, Guid id, bool chapterTrackChange, bool subjectTrackChange);
 	}
 }
