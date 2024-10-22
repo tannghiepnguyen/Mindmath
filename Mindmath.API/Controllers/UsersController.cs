@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mindmath.Repository.Constant;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.IService;
 using Mindmath.Service.Users.DTO;
+using System.Text.Json;
 
 namespace Mindmath.API.Controllers
 {
@@ -19,10 +21,11 @@ namespace Mindmath.API.Controllers
 
 		[HttpGet]
 		[Authorize(Roles = Roles.Admin)]
-		public async Task<IActionResult> GetUsers()
+		public async Task<IActionResult> GetUsers([FromQuery] UserParameters userParameters)
 		{
-			var users = await serviceManager.AuthenticationService.GetUsers();
-			return Ok(users);
+			var users = await serviceManager.AuthenticationService.GetUsers(userParameters);
+			Response.Headers.Append("X-Pagination", JsonSerializer.Serialize(users.MetaData));
+			return Ok(users.users);
 		}
 
 		[HttpGet("{id}")]

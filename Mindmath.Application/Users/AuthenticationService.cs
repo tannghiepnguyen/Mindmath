@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Mindmath.Repository.Constant;
 using Mindmath.Repository.Exceptions;
 using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
+using Mindmath.Repository.PagedList;
+using Mindmath.Repository.Parameters;
 using Mindmath.Service.Users;
 using Mindmath.Service.Users.DTO;
 using System.IdentityModel.Tokens.Jwt;
@@ -191,16 +192,16 @@ namespace Mindmath.Application.Users
 			return returnUser;
 		}
 
-		public async Task<IEnumerable<UserReturnDto>> GetUsers()
+		public async Task<(IEnumerable<UserReturnDto> users, MetaData MetaData)> GetUsers(UserParameters userParameters)
 		{
-			var users = await userManager.Users.ToListAsync();
-			var returnUsers = mapper.Map<IEnumerable<UserReturnDto>>(users);
+			var usersMetaData = PagedList<User>.ToPagedList(userManager.Users.Where(c => !c.UserName.Equals("admin")), userParameters.PageNumber, userParameters.PageSize);
+			var returnUsers = mapper.Map<IEnumerable<UserReturnDto>>(usersMetaData);
 			returnUsers = returnUsers.Select(user =>
 			{
-				user.Roles = userManager.GetRolesAsync(users.FirstOrDefault(u => u.Id == user.Id)).Result.ToList();
+				user.Roles = userManager.GetRolesAsync(usersMetaData.Find(u => u.Id == user.Id)).Result.ToList();
 				return user;
 			}).Where(c => !c.Roles.Contains(Roles.Admin));
-			return returnUsers;
+			return (returnUsers, usersMetaData.MetaData);
 		}
 
 		public async Task<IdentityResult> UpdateUserPassword(string userId, UserForUpdatePasswordDto userForUpdatePasswordDto)
