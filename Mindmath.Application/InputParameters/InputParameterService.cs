@@ -63,7 +63,7 @@ namespace Mindmath.Service.InputParameters
 
 
 			var subscriber = Connection.GetSubscriber();
-			var inputParameterJson = $"{problemTypeId.ToString()};{problemTypeName};{inputParameterEntity.Input};{userId}";
+			var inputParameterJson = $"{inputParameterEntity.Id.ToString()};{problemTypeName};{inputParameterEntity.Input};{userId}";
 
 			RedisValue redisValue = new RedisValue(inputParameterJson);
 			await subscriber.PublishAsync(Channel, redisValue);
