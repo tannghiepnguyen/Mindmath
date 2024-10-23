@@ -225,14 +225,14 @@ namespace Mindmath.Application.Users
 			return await CreateToken(false);
 		}
 
-		public async Task<IdentityResult> DeleteUser(string userId)
+		public async Task<IdentityResult> UpdateUserActive(string userId, bool active)
 		{
 			var user = await userManager.FindByIdAsync(userId);
 
 			if (user is null) throw new UserNotFoundException(userId);
 
-			user.Active = false;
-			user.DeletedAt = DateTime.Now;
+			user.Active = active;
+			user.UpdatedAt = DateTime.Now;
 
 			return await userManager.UpdateAsync(user);
 		}

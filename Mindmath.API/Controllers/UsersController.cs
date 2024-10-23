@@ -72,11 +72,11 @@ namespace Mindmath.API.Controllers
 			return NoContent();
 		}
 
-		[HttpDelete("{userId}")]
+		[HttpPut("{userId}/active")]
 		[Authorize(Roles = Roles.Admin)]
-		public async Task<IActionResult> DeleteUser(string userId)
+		public async Task<IActionResult> DeleteUser(string userId, bool active)
 		{
-			var result = await serviceManager.AuthenticationService.DeleteUser(userId);
+			var result = await serviceManager.AuthenticationService.UpdateUserActive(userId, active);
 
 			if (!result.Succeeded)
 			{
