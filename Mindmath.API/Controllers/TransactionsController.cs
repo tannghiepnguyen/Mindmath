@@ -47,7 +47,31 @@ namespace Mindmath.API.Controllers
 		[HttpGet("IPN")]
 		public async Task<IActionResult> IPN()
 		{
-			return await serviceManager.TransactionService.IPNAsync(Request.Query);
-		}
-	}
+            var result = await serviceManager.TransactionService.IPNAsync(Request.Query);
+            return Ok(result);
+        }
+
+        [HttpGet("ReturnUrl")]
+        public IActionResult ReturnUrl()
+        {
+            // Xử lý thông tin từ query string
+            var responseCode = Request.Query["vnp_ResponseCode"];
+            var transactionId = Request.Query["vnp_TxnRef"];
+
+            // Kiểm tra mã phản hồi và thực hiện logic cần thiết
+            if (responseCode == "00")
+            {
+				serviceManager.TransactionService.UpdateStatus(Guid.Parse(transactionId), "Success");
+                // Thanh toán thành công
+                return Content("Thanh toán thành công. Mã giao dịch: " + transactionId);
+            }
+            else
+            {
+                serviceManager.TransactionService.UpdateStatus(Guid.Parse(transactionId), "Failed");
+                // Thanh toán thất bại
+                return Content("Thanh toán không thành công. Mã lỗi: " + responseCode);
+            }
+        }
+
+    }
 }

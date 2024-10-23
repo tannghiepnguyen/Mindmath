@@ -49,6 +49,13 @@ namespace Mindmath.Service.Transactions
 			return (transactions, transactionsMetaData.MetaData);
 		}
 
+		public async Task<bool> UpdateStatus(Guid transactionId, string status)
+		{
+			var transaction =await repositoryManager.Transactions.GetTransactionByIdAsync(transactionId);
+			transaction.Status = status;
+			return true;
+		}
+
 		public async Task<string> CreatePaymentAsync(Guid userId, TransactionForCreationDto transactionDto)
 		{
 			var transaction = mapper.Map<Transaction>(transactionDto);
@@ -56,6 +63,7 @@ namespace Mindmath.Service.Transactions
 			transaction.CreatedAt = DateTime.Now;
 			transaction.Type = "Deposit";
 			transaction.Status = "Pending";
+			transaction.UserId = userId.ToString();
 
 			await repositoryManager.Transactions.AddTransactionAsync(transaction);
 
@@ -69,9 +77,11 @@ namespace Mindmath.Service.Transactions
 			vnpay.AddRequestData("vnp_CurrCode", "VND");
 			vnpay.AddRequestData("vnp_IpAddr", utils.GetIpAddress());
 			vnpay.AddRequestData("vnp_Locale", "vn");
-			vnpay.AddRequestData("vnp_OrderInfo", $"Payment for order {transaction.Id}");
+            vnpay.AddRequestData("vnp_OrderType", "other");
+            vnpay.AddRequestData("vnp_OrderInfo", $"Payment for order {transaction.Id}");
 			vnpay.AddRequestData("vnp_ReturnUrl", configuration.GetSection("VNPay").GetSection("ReturnUrl").Value);
 			vnpay.AddRequestData("vnp_TxnRef", transaction.Id.ToString());
+
 			var paymentUrl = vnpay.CreateRequestUrl(configuration.GetSection("VNPay").GetSection("Url").Value, configuration.GetSection("VNPay").GetSection("HashSecret").Value);
 			return paymentUrl; // Redirect to this URL for payment
 		}

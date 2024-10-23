@@ -154,6 +154,15 @@ namespace Mindmath.Service.Transactions
                     {
                         ipAddress = context.Connection.RemoteIpAddress?.ToString();
                     }
+
+                    if (IPAddress.TryParse(ipAddress, out var parsedIp))
+                    {
+                        if (parsedIp.AddressFamily == System.Net.Sockets.AddressFamily.InterNetworkV6)
+                        {
+                            parsedIp = parsedIp.MapToIPv4();
+                        }
+                        ipAddress = parsedIp.ToString();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -162,11 +171,12 @@ namespace Mindmath.Service.Transactions
             }
             else
             {
-                ipAddress = "No HttpContext available"; // Thông báo khi không có HttpContext
+                ipAddress = "No HttpContext available"; 
             }
 
             return ipAddress;
         }
+
     }
 
     public class VnPayCompare : IComparer<string>
