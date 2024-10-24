@@ -8,6 +8,7 @@ using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
 using Mindmath.Repository.PagedList;
 using Mindmath.Repository.Parameters;
+using Mindmath.Service.IService;
 using Mindmath.Service.Users;
 using Mindmath.Service.Users.DTO;
 using System.IdentityModel.Tokens.Jwt;
@@ -24,15 +25,17 @@ namespace Mindmath.Application.Users
 		private readonly IConfiguration configuration;
 		private readonly RoleManager<IdentityRole> roleManager;
 		private readonly IRepositoryManager repositoryManager;
+		private readonly IBlobService blobService;
 		private User? user;
 
-		public AuthenticationService(UserManager<User> userManager, IMapper mapper, IConfiguration configuration, RoleManager<IdentityRole> roleManager, IRepositoryManager repositoryManager)
+		public AuthenticationService(UserManager<User> userManager, IMapper mapper, IConfiguration configuration, RoleManager<IdentityRole> roleManager, IRepositoryManager repositoryManager, IBlobService blobService)
 		{
 			this.userManager = userManager;
 			this.mapper = mapper;
 			this.configuration = configuration;
 			this.roleManager = roleManager;
 			this.repositoryManager = repositoryManager;
+			this.blobService = blobService;
 		}
 
 		public async Task<TokenDto> CreateToken(bool populateExp)
@@ -127,6 +130,7 @@ namespace Mindmath.Application.Users
 			claims.Add(new Claim("Id", user.Id));
 			claims.Add(new Claim("Email", user.Email));
 			claims.Add(new Claim("PhoneNumber", user.PhoneNumber));
+			claims.Add(new Claim("Avatar", user.Avatar));
 			return claims;
 		}
 
@@ -142,6 +146,7 @@ namespace Mindmath.Application.Users
 			var user = mapper.Map<User>(userForRegistration);
 			user.CreatedAt = DateTime.Now;
 			user.Active = true;
+			user.Avatar = "https://media.istockphoto.com/vectors/default-profile-picture-avatar-photo-placeholder-vector-illustration-vector-id1223671392?k=6&m=1223671392&s=170667a&w=0&h=zP3l7WJinOFaGb2i1F4g8IS2ylw0FlIaa6x3tP9sebU=";
 
 			var result = await userManager.CreateAsync(user, userForRegistration.Password);
 			if (result.Succeeded)
@@ -177,6 +182,12 @@ namespace Mindmath.Application.Users
 
 			mapper.Map(userForUpdateDto, user);
 			user.UpdatedAt = DateTime.Now;
+			if (userForUpdateDto.File is not null && userForUpdateDto.File.Length > 0)
+			{
+				await blobService.DeleteBlob(user.Avatar.Split('/').Last(), StorageContainer.STORAGE_CONTAINER);
+				string filename = $"{Guid.NewGuid()}{Path.GetExtension(userForUpdateDto.File.FileName)}";
+				user.Avatar = await blobService.UploadBlob(filename, StorageContainer.STORAGE_CONTAINER, userForUpdateDto.File);
+			}
 
 			return await userManager.UpdateAsync(user);
 		}

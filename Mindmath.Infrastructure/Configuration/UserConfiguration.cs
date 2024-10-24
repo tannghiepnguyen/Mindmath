@@ -13,6 +13,7 @@ namespace Mindmath.Infrastructure.Configuration
 			builder.Property(u => u.UpdatedAt);
 			builder.Property(u => u.DeletedAt);
 			builder.Property(u => u.Active).IsRequired();
+			builder.Property(u => u.Avatar);
 			builder.Property(u => u.RefreshToken).IsRequired();
 			builder.Property(u => u.RefreshTokenExpiryTime).IsRequired();
 			builder.HasOne(u => u.Wallet).WithOne(u => u.User).OnDelete(DeleteBehavior.Restrict);

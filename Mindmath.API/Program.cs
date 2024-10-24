@@ -25,6 +25,7 @@ builder.Services.AddAuthentication();
 builder.Services.ConfigureJwt(builder.Configuration);
 builder.Services.ConfigureReceiverService();
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddBlobService(builder.Configuration);
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>

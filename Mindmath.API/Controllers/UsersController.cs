@@ -38,7 +38,7 @@ namespace Mindmath.API.Controllers
 
 		[HttpPut("{userId}")]
 		[Authorize(Roles = Roles.Teacher)]
-		public async Task<IActionResult> UpdateUser([FromRoute] string userId, [FromBody] UserForUpdateDto userForRegistrationDTO)
+		public async Task<IActionResult> UpdateUser([FromRoute] string userId, [FromForm] UserForUpdateDto userForRegistrationDTO)
 		{
 			var result = await serviceManager.AuthenticationService.UpdateUser(userId, userForRegistrationDTO);
 
