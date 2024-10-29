@@ -1,6 +1,4 @@
-﻿using Mindmath.Repository.Models;
-
-namespace Mindmath.Service.Transactions.DTO
+﻿namespace Mindmath.Service.Transactions.DTO
 {
 	public record TransactionReturnDto
 	{
@@ -10,6 +8,5 @@ namespace Mindmath.Service.Transactions.DTO
 		public string Type { get; init; }
 		public DateTime CreateAt { get; init; }
 		public string Status { get; init; }
-		public User User { get; init; }
 	}
 }

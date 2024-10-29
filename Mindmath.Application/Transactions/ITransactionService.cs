@@ -14,5 +14,5 @@ namespace Mindmath.Service.Transactions
         Task UpdateTransaction(Guid id, string status, bool trackChange);
         Task<(IEnumerable<TransactionReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, bool trackChange);
 		Task<(IEnumerable<TransactionReturnDto> transactions, MetaData metaData)> GetTransactionsByUserId(string userId, TransactionParameters transactionParameters, bool trackChange);
-    }
+	}
 }

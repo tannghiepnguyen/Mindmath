@@ -38,6 +38,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPost("create")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> CreatePayment(string userId, [FromBody] TransactionForCreationDto transactionDto)
 		{
 			var paymentUrl = await serviceManager.TransactionService.CreatePaymentAsync(Guid.Parse(userId), transactionDto);
@@ -47,9 +48,9 @@ namespace Mindmath.API.Controllers
 		[HttpGet("IPN")]
 		public async Task<IActionResult> IPN()
 		{
-            var result = await serviceManager.TransactionService.IPNAsync(Request.Query);
-            return Ok(result);
-        }
+			var result = await serviceManager.TransactionService.IPNAsync(Request.Query);
+			return Ok(result);
+		}
 
 
         [HttpGet("ReturnUrl")]
@@ -74,5 +75,5 @@ namespace Mindmath.API.Controllers
             }
         }
 
-    }
+	}
 }

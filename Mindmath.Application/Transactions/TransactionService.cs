@@ -78,8 +78,8 @@ namespace Mindmath.Service.Transactions
 			vnpay.AddRequestData("vnp_CurrCode", "VND");
 			vnpay.AddRequestData("vnp_IpAddr", utils.GetIpAddress());
 			vnpay.AddRequestData("vnp_Locale", "vn");
-            vnpay.AddRequestData("vnp_OrderType", "other");
-            vnpay.AddRequestData("vnp_OrderInfo", $"Payment for order {transaction.Id}");
+			vnpay.AddRequestData("vnp_OrderType", "other");
+			vnpay.AddRequestData("vnp_OrderInfo", $"Payment for order {transaction.Id}");
 			vnpay.AddRequestData("vnp_ReturnUrl", configuration.GetSection("VNPay").GetSection("ReturnUrl").Value);
 			vnpay.AddRequestData("vnp_TxnRef", transaction.Id.ToString());
 
@@ -119,10 +119,10 @@ namespace Mindmath.Service.Transactions
 
 			// Update transaction status based on response code
 			if (responseCode == "00")
-			{                
-                transaction.Status = "Success";
-                await repositoryManager.Save(); // Update to success
-            }
+			{
+				transaction.Status = "Success";
+				await repositoryManager.Save(); // Update to success
+			}
 			else
 			{
 				transaction.Status = "Failed";
