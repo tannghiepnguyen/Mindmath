@@ -8,6 +8,7 @@ using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
 using Mindmath.Repository.PagedList;
 using Mindmath.Repository.Parameters;
+using Mindmath.Service.Service;
 using Mindmath.Service.Subjects.DTO;
 using Mindmath.Service.Transactions.DTO;
 
@@ -52,8 +53,28 @@ namespace Mindmath.Service.Transactions
 
         public async Task UpdateTransaction(Guid id, string status, bool trackChange)
         {
+            // Bước 1: Cập nhật transaction trước
             var transaction = await repositoryManager.Transactions.GetSubjectById(id, trackChange);
+            if (transaction == null)
+            {
+                throw new Exception("Transaction not found");
+            }
+
             transaction.Status = status;
+
+            // Lưu thay đổi của transaction
+            await repositoryManager.Save();
+
+            // Bước 2: Cập nhật Wallet sau khi transaction đã được lưu
+            var wallet = await repositoryManager.Wallets.GetWalletByUserId(transaction.UserId, trackChange);
+            if (wallet == null)
+            {
+                throw new Exception("Wallet not found");
+            }
+
+            wallet.Balance += transaction.Amount;
+
+            // Lưu thay đổi của wallet
             await repositoryManager.Save();
         }
 

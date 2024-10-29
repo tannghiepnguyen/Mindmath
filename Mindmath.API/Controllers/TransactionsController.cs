@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Mindmath.Infrastructure.Repository;
 using Mindmath.Repository.Constant;
 using Mindmath.Repository.Parameters;
 using Mindmath.Service.IService;
