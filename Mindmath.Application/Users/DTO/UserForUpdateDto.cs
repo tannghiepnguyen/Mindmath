@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace Mindmath.Service.Users.DTO
 {
@@ -10,5 +11,6 @@ namespace Mindmath.Service.Users.DTO
 		public string Email { get; init; }
 		[Required]
 		public string PhoneNumber { get; init; }
+		public IFormFile File { get; init; }
 	}
 }

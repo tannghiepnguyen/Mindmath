@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Azure.Storage.Blobs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -42,5 +43,11 @@ namespace Mindmath.Service.Extension
 		public static void ConfigureLoggerService(this IServiceCollection services) => services.AddSingleton<ILoggerManager, LoggerManager>();
 
 		public static void ConfigureReceiverService(this IServiceCollection services) => services.AddHostedService<ReceiverService>();
+
+		public static void AddBlobService(this IServiceCollection services, IConfiguration configuration)
+		{
+			services.AddSingleton(u => new BlobServiceClient(configuration.GetConnectionString("StorageAccount")));
+			services.AddSingleton<IBlobService, BlobService>();
+		}
 	}
 }

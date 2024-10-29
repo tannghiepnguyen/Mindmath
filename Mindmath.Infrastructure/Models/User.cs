@@ -10,6 +10,7 @@ namespace Mindmath.Repository.Models
 		public DateTime? UpdatedAt { get; set; }
 		public DateTime? DeletedAt { get; set; }
 		public bool Active { get; set; }
+		public string? Avatar { get; set; }
 		public string? RefreshToken { get; set; }
 		public DateTime RefreshTokenExpiryTime { get; set; }
 		public Wallet Wallet { get; set; }
