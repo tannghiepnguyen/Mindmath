@@ -9,7 +9,8 @@ namespace Mindmath.Repository.IRepository
 		void CreateTransaction(Transaction transaction);
         Task<Transaction> AddTransactionAsync(Transaction transaction);
         Task<Transaction?> GetTransactionByIdAsync(Guid id);
-		Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange);
+        Task<Transaction?> GetSubjectById(Guid id, bool trackChange);
+        Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange);
 		Task<PagedList<Transaction>> GetTransactionsByUserId(string userId, TransactionParameters transactionParameters, bool trackChange);
 	}
 }

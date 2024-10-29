@@ -51,8 +51,9 @@ namespace Mindmath.API.Controllers
             return Ok(result);
         }
 
+
         [HttpGet("ReturnUrl")]
-        public IActionResult ReturnUrl()
+        public async Task<IActionResult> ReturnUrl()
         {
             // Xử lý thông tin từ query string
             var responseCode = Request.Query["vnp_ResponseCode"];
@@ -62,11 +63,13 @@ namespace Mindmath.API.Controllers
             if (responseCode == "00")
             {
                 // Thanh toán thành công
+                await serviceManager.TransactionService.UpdateTransaction(Guid.Parse(transactionId), "Success", trackChange: true);
                 return Content("Thanh toán thành công. Mã giao dịch: " + transactionId);
             }
             else
             {
                 // Thanh toán thất bại
+                await serviceManager.TransactionService.UpdateTransaction(Guid.Parse(transactionId), "Failed", trackChange: true);
                 return Content("Thanh toán không thành công. Mã lỗi: " + responseCode);
             }
         }

@@ -8,6 +8,7 @@ using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
 using Mindmath.Repository.PagedList;
 using Mindmath.Repository.Parameters;
+using Mindmath.Service.Subjects.DTO;
 using Mindmath.Service.Transactions.DTO;
 
 namespace Mindmath.Service.Transactions
@@ -49,7 +50,14 @@ namespace Mindmath.Service.Transactions
 			return (transactions, transactionsMetaData.MetaData);
 		}
 
-		public async Task<string> CreatePaymentAsync(Guid userId, TransactionForCreationDto transactionDto)
+        public async Task UpdateTransaction(Guid id, string status, bool trackChange)
+        {
+            var transaction = await repositoryManager.Transactions.GetSubjectById(id, trackChange);
+            transaction.Status = status;
+            await repositoryManager.Save();
+        }
+
+        public async Task<string> CreatePaymentAsync(Guid userId, TransactionForCreationDto transactionDto)
 		{
 			var transaction = mapper.Map<Transaction>(transactionDto);
 			transaction.Id = Guid.NewGuid();
