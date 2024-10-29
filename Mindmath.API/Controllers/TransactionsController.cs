@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Mindmath.Infrastructure.Repository;
 using Mindmath.Repository.Constant;
 using Mindmath.Repository.Parameters;
 using Mindmath.Service.IService;
@@ -39,6 +38,7 @@ namespace Mindmath.API.Controllers
 		}
 
 		[HttpPost("create")]
+		[Authorize(Roles = Roles.Teacher)]
 		public async Task<IActionResult> CreatePayment(string userId, [FromBody] TransactionForCreationDto transactionDto)
 		{
 			var paymentUrl = await serviceManager.TransactionService.CreatePaymentAsync(Guid.Parse(userId), transactionDto);
@@ -53,27 +53,27 @@ namespace Mindmath.API.Controllers
 		}
 
 
-        [HttpGet("ReturnUrl")]
-        public async Task<IActionResult> ReturnUrl()
-        {
-            // Xử lý thông tin từ query string
-            var responseCode = Request.Query["vnp_ResponseCode"];
-            var transactionId = Request.Query["vnp_TxnRef"];
+		[HttpGet("ReturnUrl")]
+		public async Task<IActionResult> ReturnUrl()
+		{
+			// Xử lý thông tin từ query string
+			var responseCode = Request.Query["vnp_ResponseCode"];
+			var transactionId = Request.Query["vnp_TxnRef"];
 
-            // Kiểm tra mã phản hồi và thực hiện logic cần thiết
-            if (responseCode == "00")
-            {
-                // Thanh toán thành công
-                await serviceManager.TransactionService.UpdateTransaction(Guid.Parse(transactionId), "Success", trackChange: true);
-                return Content("Thanh toán thành công. Mã giao dịch: " + transactionId);
-            }
-            else
-            {
-                // Thanh toán thất bại
-                await serviceManager.TransactionService.UpdateTransaction(Guid.Parse(transactionId), "Failed", trackChange: true);
-                return Content("Thanh toán không thành công. Mã lỗi: " + responseCode);
-            }
-        }
+			// Kiểm tra mã phản hồi và thực hiện logic cần thiết
+			if (responseCode == "00")
+			{
+				// Thanh toán thành công
+				await serviceManager.TransactionService.UpdateTransaction(Guid.Parse(transactionId), "Success", trackChange: true);
+				return Content("Thanh toán thành công. Mã giao dịch: " + transactionId);
+			}
+			else
+			{
+				// Thanh toán thất bại
+				await serviceManager.TransactionService.UpdateTransaction(Guid.Parse(transactionId), "Failed", trackChange: true);
+				return Content("Thanh toán không thành công. Mã lỗi: " + responseCode);
+			}
+		}
 
 	}
 }
