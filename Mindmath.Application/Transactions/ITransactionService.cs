@@ -12,5 +12,5 @@ namespace Mindmath.Service.Transactions
 		Task<IActionResult> IPNAsync(IQueryCollection query);
 		Task<(IEnumerable<TransactionReturnDto> transactions, MetaData metaData)> GetTransactions(TransactionParameters transactionParameters, bool trackChange);
 		Task<(IEnumerable<TransactionReturnDto> transactions, MetaData metaData)> GetTransactionsByUserId(string userId, TransactionParameters transactionParameters, bool trackChange);
-    }
+	}
 }
