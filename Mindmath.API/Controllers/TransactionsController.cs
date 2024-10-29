@@ -61,13 +61,11 @@ namespace Mindmath.API.Controllers
             // Kiểm tra mã phản hồi và thực hiện logic cần thiết
             if (responseCode == "00")
             {
-				serviceManager.TransactionService.UpdateStatus(Guid.Parse(transactionId), "Success");
                 // Thanh toán thành công
                 return Content("Thanh toán thành công. Mã giao dịch: " + transactionId);
             }
             else
             {
-                serviceManager.TransactionService.UpdateStatus(Guid.Parse(transactionId), "Failed");
                 // Thanh toán thất bại
                 return Content("Thanh toán không thành công. Mã lỗi: " + responseCode);
             }

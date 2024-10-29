@@ -49,13 +49,6 @@ namespace Mindmath.Service.Transactions
 			return (transactions, transactionsMetaData.MetaData);
 		}
 
-		public async Task<bool> UpdateStatus(Guid transactionId, string status)
-		{
-			var transaction =await repositoryManager.Transactions.GetTransactionByIdAsync(transactionId);
-			transaction.Status = status;
-			return true;
-		}
-
 		public async Task<string> CreatePaymentAsync(Guid userId, TransactionForCreationDto transactionDto)
 		{
 			var transaction = mapper.Map<Transaction>(transactionDto);
@@ -118,16 +111,15 @@ namespace Mindmath.Service.Transactions
 
 			// Update transaction status based on response code
 			if (responseCode == "00")
-			{
-				transaction.Status = "Success"; // Update to success
-			}
+			{                
+                transaction.Status = "Success";
+                await repositoryManager.Save(); // Update to success
+            }
 			else
 			{
-				transaction.Status = "Failed"; // Update to failed
+				transaction.Status = "Failed";
+				await repositoryManager.Save(); // Update to failed
 			}
-
-			// Save changes to database
-			await repositoryManager.Transactions.AddTransactionAsync(transaction);
 
 			return new JsonResult(new { RspCode = "00", Message = "Confirm Success" });
 		}
