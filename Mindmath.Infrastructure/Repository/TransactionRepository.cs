@@ -1,4 +1,5 @@
-﻿using Mindmath.Repository.IRepository;
+﻿using Microsoft.EntityFrameworkCore;
+using Mindmath.Repository.IRepository;
 using Mindmath.Repository.Models;
 using Mindmath.Repository.PagedList;
 using Mindmath.Repository.Parameters;
