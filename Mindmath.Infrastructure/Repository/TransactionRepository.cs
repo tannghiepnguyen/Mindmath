@@ -24,10 +24,10 @@ namespace Mindmath.Repository.Repository
 			return FindByIdAsync(w => w.Id == id);
 		}
 
-		public async Task<Transaction?> GetSubjectById(Guid id, bool trackChange) => await FindByCondition(s => s.Id.Equals(id), trackChange).SingleOrDefaultAsync();
+		public async Task<Transaction?> GetTransactionById(Guid id, bool trackChange) => await FindByCondition(s => s.Id.Equals(id), trackChange).SingleOrDefaultAsync();
 		public async Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange)
 		{
-			var transactions = FindAll(trackChange);
+			var transactions = FindAll(trackChange).OrderByDescending(c => c.CreatedAt);
 			return PagedList<Transaction>.ToPagedList(transactions, transactionParameters.PageNumber, transactionParameters.PageSize);
 		}
 
