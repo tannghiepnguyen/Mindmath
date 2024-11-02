@@ -19,13 +19,13 @@ namespace Mindmath.Repository.Repository
 			return await CreateAsync(transaction);
 		}
 
-        public Task<Transaction?> GetTransactionByIdAsync(Guid id)
-        {
-            return FindByIdAsync(w => w.Id == id);
-        }
+		public Task<Transaction?> GetTransactionByIdAsync(Guid id)
+		{
+			return FindByIdAsync(w => w.Id == id);
+		}
 
-        public async Task<Transaction?> GetSubjectById(Guid id, bool trackChange) => await FindByCondition(s => s.Id.Equals(id), trackChange).SingleOrDefaultAsync();
-        public async Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange)
+		public async Task<Transaction?> GetSubjectById(Guid id, bool trackChange) => await FindByCondition(s => s.Id.Equals(id), trackChange).SingleOrDefaultAsync();
+		public async Task<PagedList<Transaction>> GetTransactions(TransactionParameters transactionParameters, bool trackChange)
 		{
 			var transactions = FindAll(trackChange);
 			return PagedList<Transaction>.ToPagedList(transactions, transactionParameters.PageNumber, transactionParameters.PageSize);
@@ -33,7 +33,7 @@ namespace Mindmath.Repository.Repository
 
 		public async Task<PagedList<Transaction>> GetTransactionsByUserId(string userId, TransactionParameters transactionParameters, bool trackChange)
 		{
-			var transactions = FindByCondition(x => x.UserId == userId, trackChange);
+			var transactions = FindByCondition(x => x.UserId == userId, trackChange).OrderByDescending(c => c.CreatedAt);
 			return PagedList<Transaction>.ToPagedList(transactions, transactionParameters.PageNumber, transactionParameters.PageSize);
 		}
 	}
