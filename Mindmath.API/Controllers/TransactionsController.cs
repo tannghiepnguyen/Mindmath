@@ -46,7 +46,6 @@ namespace Mindmath.API.Controllers
 		}
 
         [HttpPost("mobile/create")]
-        [Authorize(Roles = Roles.Teacher)]
         public async Task<IActionResult> CreatePaymentMobile(string userId, [FromBody] TransactionForCreationDto transactionDto)
 		{
 			var paymentUrl = await serviceManager.TransactionService.CreatePaymentMobileAsync(Guid.Parse(userId), transactionDto);
