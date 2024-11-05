@@ -37,15 +37,23 @@ namespace Mindmath.API.Controllers
 			return Ok(transactions.transactions);
 		}
 
-		[HttpPost("create")]
+		[HttpPost("web/create")]
 		[Authorize(Roles = Roles.Teacher)]
-		public async Task<IActionResult> CreatePayment(string userId, [FromBody] TransactionForCreationDto transactionDto)
+		public async Task<IActionResult> CreatePaymentWeb(string userId, [FromBody] TransactionForCreationDto transactionDto)
 		{
-			var paymentUrl = await serviceManager.TransactionService.CreatePaymentAsync(Guid.Parse(userId), transactionDto);
+			var paymentUrl = await serviceManager.TransactionService.CreatePaymentWebAsync(Guid.Parse(userId), transactionDto);
 			return Ok(new { PaymentUrl = paymentUrl });
 		}
 
-		[HttpGet("IPN")]
+        [HttpPost("mobile/create")]
+        [Authorize(Roles = Roles.Teacher)]
+        public async Task<IActionResult> CreatePaymentMobile(string userId, [FromBody] TransactionForCreationDto transactionDto)
+		{
+			var paymentUrl = await serviceManager.TransactionService.CreatePaymentMobileAsync(Guid.Parse(userId), transactionDto);
+			return Ok(new { PaymentUrl = paymentUrl });
+        }
+
+        [HttpGet("IPN")]
 		public async Task<IActionResult> IPN()
 		{
 			var result = await serviceManager.TransactionService.IPNAsync(Request.Query);

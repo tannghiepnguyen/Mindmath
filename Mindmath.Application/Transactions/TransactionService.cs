@@ -76,7 +76,7 @@ namespace Mindmath.Service.Transactions
 			await repositoryManager.Save();
 		}
 
-		public async Task<string> CreatePaymentAsync(Guid userId, TransactionForCreationDto transactionDto)
+		public async Task<string> CreatePaymentWebAsync(Guid userId, TransactionForCreationDto transactionDto)
 		{
 			var transaction = mapper.Map<Transaction>(transactionDto);
 			transaction.Id = Guid.NewGuid();
@@ -99,14 +99,44 @@ namespace Mindmath.Service.Transactions
 			vnpay.AddRequestData("vnp_Locale", "vn");
 			vnpay.AddRequestData("vnp_OrderType", "other");
 			vnpay.AddRequestData("vnp_OrderInfo", $"Payment for order {transaction.Id}");
-			vnpay.AddRequestData("vnp_ReturnUrl", configuration.GetSection("VNPay").GetSection("ReturnUrl").Value);
+			vnpay.AddRequestData("vnp_ReturnUrl", configuration.GetSection("VNPay").GetSection("ReturnUrlWeb").Value);
 			vnpay.AddRequestData("vnp_TxnRef", transaction.Id.ToString());
 
 			var paymentUrl = vnpay.CreateRequestUrl(configuration.GetSection("VNPay").GetSection("Url").Value, configuration.GetSection("VNPay").GetSection("HashSecret").Value);
 			return paymentUrl; // Redirect to this URL for payment
 		}
 
-		public async Task<IActionResult> IPNAsync(IQueryCollection query)
+        public async Task<string> CreatePaymentMobileAsync(Guid userId, TransactionForCreationDto transactionDto)
+        {
+            var transaction = mapper.Map<Transaction>(transactionDto);
+            transaction.Id = Guid.NewGuid();
+            transaction.CreatedAt = DateTime.Now;
+            transaction.Type = "Deposit";
+            transaction.Status = "Pending";
+            transaction.UserId = userId.ToString();
+
+            await repositoryManager.Transactions.AddTransactionAsync(transaction);
+
+            // Tạo URL thanh toán VNPay
+            var vnpay = new VnPayLibrary();
+            vnpay.AddRequestData("vnp_Version", "2.1.0");
+            vnpay.AddRequestData("vnp_Command", "pay");
+            vnpay.AddRequestData("vnp_TmnCode", configuration.GetSection("VNPay").GetSection("TmnCode").Value);
+            vnpay.AddRequestData("vnp_Amount", (transactionDto.Amount * 100).ToString());
+            vnpay.AddRequestData("vnp_CreateDate", DateTime.Now.ToString("yyyyMMddHHmmss"));
+            vnpay.AddRequestData("vnp_CurrCode", "VND");
+            vnpay.AddRequestData("vnp_IpAddr", utils.GetIpAddress());
+            vnpay.AddRequestData("vnp_Locale", "vn");
+            vnpay.AddRequestData("vnp_OrderType", "other");
+            vnpay.AddRequestData("vnp_OrderInfo", $"Payment for order {transaction.Id}");
+            vnpay.AddRequestData("vnp_ReturnUrl", configuration.GetSection("VNPay").GetSection("ReturnUrlMobile").Value);
+            vnpay.AddRequestData("vnp_TxnRef", transaction.Id.ToString());
+
+            var paymentUrl = vnpay.CreateRequestUrl(configuration.GetSection("VNPay").GetSection("Url").Value, configuration.GetSection("VNPay").GetSection("HashSecret").Value);
+            return paymentUrl; // Redirect to this URL for payment
+        }
+
+        public async Task<IActionResult> IPNAsync(IQueryCollection query)
 		{
 			var vnpay = new VnPayLibrary();
 			foreach (var key in query.Keys)
