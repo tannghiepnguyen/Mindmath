@@ -23,6 +23,7 @@ namespace Mindmath.API
 				httpContext.Response.StatusCode = contextFeature.Error switch
 				{
 					NotFoundException => StatusCodes.Status404NotFound,
+					NotEnoughCreditException => StatusCodes.Status402PaymentRequired,
 					_ => StatusCodes.Status500InternalServerError,
 				};
 

@@ -46,10 +46,17 @@ namespace Mindmath.Service.InputParameters
 			if (problemType == null) throw new ProblemTypeNotFoundException(problemTypeId);
 		}
 
+		private async Task CheckEnoughCredit(string userId)
+		{
+			var currentBalance = (await repositoryManager.Wallets.GetWalletByUserId(userId, false)).Balance;
+			if (currentBalance < 10000) throw new NotEnoughCreditException("You don't have enough credit to generate video");
+		}
+
 		public async Task<InputParameterReturnDto> CreateInputParameter(InputParameterForCreationDto inputParameter, Guid problemTypeId, string userId, bool trackChange)
 		{
 			await CheckUserExist(userId);
 			await CheckProblemTypeExist(problemTypeId, trackChange);
+			await CheckEnoughCredit(userId);
 
 			var inputParameterEntity = mapper.Map<InputParameter>(inputParameter);
 			inputParameterEntity.Id = Guid.NewGuid();
